@@ -139,6 +139,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Visão geral', slug: 'catalogo' },
 						{ label: 'Por situação', slug: 'catalogo/situacao' },
+						{ label: 'Onde está o código', slug: 'catalogo/repositorios' },
 						{ label: 'Modelo de ficha', slug: 'catalogo/modelo-de-ficha' },
 					],
 				},
