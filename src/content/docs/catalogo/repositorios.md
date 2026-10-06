@@ -5,7 +5,7 @@ description: Em qual repositório da organização Cooperacre fica o código de 
 
 Todo o código dos sistemas fica guardado na organização **Cooperacre**, no GitHub. Um **repositório** é a pasta online onde o código de um sistema é guardado, com o histórico de cada alteração, para que qualquer pessoa autorizada consiga manter e dar continuidade ao trabalho.
 
-Os repositórios são **privados**: abrem só para quem tem acesso à organização. Cada item leva à sua ficha.
+Os repositórios são **privados**: abrem só para quem tem acesso à organização. Cada item leva à sua ficha, e cada repositório leva ao código.
 
 <div class="tabela-situacao">
 
@@ -26,12 +26,9 @@ Os repositórios são **privados**: abrem só para quem tem acesso à organizaç
 
 </div>
 
-## Ainda sem repositório
+## Itens sem repositório próprio
 
-Os itens abaixo ainda não foram enviados à organização. Entram aos poucos, conforme o estágio de cada um:
-Conciliador Contábil, Conversor de Extrato SICOOB, Formatar Exportação e Gerador de Cards.
-
-Controle de Saída, Controle Interno e Transferência Estoque Balcão são planilhas online e não têm repositório próprio.
+Nem todo item do manual tem repositório. Planilhas online e automações pequenas podem existir sem código guardado à parte. Quando um item passa a ter repositório, ele entra na tabela acima.
 
 ## Como o código é mantido
 
