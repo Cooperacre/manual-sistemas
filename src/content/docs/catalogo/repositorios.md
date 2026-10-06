@@ -5,24 +5,24 @@ description: Em qual repositório da organização Cooperacre fica o código de 
 
 Todo o código dos sistemas fica guardado na organização **Cooperacre**, no GitHub. Um **repositório** é a pasta online onde o código de um sistema é guardado, com o histórico de cada alteração, para que qualquer pessoa autorizada consiga manter e dar continuidade ao trabalho.
 
-Os repositórios são **privados**: abrem só para quem tem acesso à organização. Cada item leva à sua ficha, e cada repositório leva ao código.
+Os repositórios são **privados**: abrem só para quem está conectado ao GitHub com acesso à organização. Para os demais, o GitHub mostra uma página de erro "404" (não encontrada), o que é esperado e não significa que o endereço esteja errado. Cada item leva à sua ficha.
 
 <div class="tabela-situacao">
 
-| Item | Repositório |
+| Item | Endereço do repositório (acesso restrito) |
 |---|---|
-| [Análise Comercial](/catalogo/analisecomercial/) | [analise-comercial](https://github.com/Cooperacre/analise-comercial) |
-| [Comissão](/catalogo/comissao/) | [comissao](https://github.com/Cooperacre/comissao) |
-| [Consulta Meta](/catalogo/consultameta/) | [consulta-meta](https://github.com/Cooperacre/consulta-meta) |
-| [CooperConecta](/catalogo/cooperconecta/) | [cooperconecta](https://github.com/Cooperacre/cooperconecta) |
-| [CooperFlow](/catalogo/cooperflow/) | [cooperflow](https://github.com/Cooperacre/cooperflow) |
-| [Cooperlog](/catalogo/cooperlog/) | [cooperlog](https://github.com/Cooperacre/cooperlog) |
-| [Net Monitor](/catalogo/netmonitor/) | [netmonitor](https://github.com/Cooperacre/netmonitor) |
-| [Estoque Polpa](/catalogo/estoquepolpa/) | [estoque-polpa](https://github.com/Cooperacre/estoque-polpa) |
-| [Meta Pipeline](/catalogo/meta-pipeline/) | [meta-pipeline](https://github.com/Cooperacre/meta-pipeline) |
-| [Controle de Vendas](/catalogo/controledevendas/) | [controle-vendas](https://github.com/Cooperacre/controle-vendas) |
-| [Filial IV (manual)](/catalogo/filial-4/) | [manual-filial-iv](https://github.com/Cooperacre/manual-filial-iv) |
-| Este manual | [manual-sistemas](https://github.com/Cooperacre/manual-sistemas) |
+| [Análise Comercial](/catalogo/analisecomercial/) | [github.com/Cooperacre/analise-comercial](https://github.com/Cooperacre/analise-comercial) |
+| [Comissão](/catalogo/comissao/) | [github.com/Cooperacre/comissao](https://github.com/Cooperacre/comissao) |
+| [Consulta Meta](/catalogo/consultameta/) | [github.com/Cooperacre/consulta-meta](https://github.com/Cooperacre/consulta-meta) |
+| [CooperConecta](/catalogo/cooperconecta/) | [github.com/Cooperacre/cooperconecta](https://github.com/Cooperacre/cooperconecta) |
+| [CooperFlow](/catalogo/cooperflow/) | [github.com/Cooperacre/cooperflow](https://github.com/Cooperacre/cooperflow) |
+| [Cooperlog](/catalogo/cooperlog/) | [github.com/Cooperacre/cooperlog](https://github.com/Cooperacre/cooperlog) |
+| [Net Monitor](/catalogo/netmonitor/) | [github.com/Cooperacre/netmonitor](https://github.com/Cooperacre/netmonitor) |
+| [Estoque Polpa](/catalogo/estoquepolpa/) | [github.com/Cooperacre/estoque-polpa](https://github.com/Cooperacre/estoque-polpa) |
+| [Meta Pipeline](/catalogo/meta-pipeline/) | [github.com/Cooperacre/meta-pipeline](https://github.com/Cooperacre/meta-pipeline) |
+| [Controle de Vendas](/catalogo/controledevendas/) | [github.com/Cooperacre/controle-vendas](https://github.com/Cooperacre/controle-vendas) |
+| [Filial IV (manual)](/catalogo/filial-4/) | [github.com/Cooperacre/manual-filial-iv](https://github.com/Cooperacre/manual-filial-iv) |
+| Este manual | [github.com/Cooperacre/manual-sistemas](https://github.com/Cooperacre/manual-sistemas) |
 
 </div>
 
