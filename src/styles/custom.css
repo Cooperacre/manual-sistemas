@@ -1886,3 +1886,16 @@
 :root[data-theme='dark'] .cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
   border-top: 3px solid #21c25e;
 }
+
+/* Tabela "Onde está o código": duas colunas, o endereço do repositório pede mais largura que o nome do item */
+@media screen and (min-width: 768px) {
+  .tabela-situacao.tabela-repos th:nth-child(1),
+  .tabela-situacao.tabela-repos td:nth-child(1) {
+    width: 36%;
+  }
+
+  .tabela-situacao.tabela-repos th:nth-child(2),
+  .tabela-situacao.tabela-repos td:nth-child(2) {
+    width: 64%;
+  }
+}

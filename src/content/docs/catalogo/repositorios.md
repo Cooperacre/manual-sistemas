@@ -7,7 +7,7 @@ Todo o código dos sistemas fica guardado na organização **Cooperacre**, no Gi
 
 Os repositórios são **privados**: abrem só para quem está conectado ao GitHub com acesso à organização. Para os demais, o GitHub mostra uma página de erro "404" (não encontrada), o que é esperado e não significa que o endereço esteja errado. Cada item leva à sua ficha.
 
-<div class="tabela-situacao">
+<div class="tabela-situacao tabela-repos">
 
 | Item | Endereço do repositório (acesso restrito) |
 |---|---|
