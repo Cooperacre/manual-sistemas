@@ -1,0 +1,132 @@
+---
+title: CooperConecta
+description: Sistema de comunicação interna da Cooperacre, com tarefas, avisos, chat e calendário entre setores.
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Pronto para uso" variant="success" size="large" />
+  <Badge text="Aguardando apresentação aos setores" variant="caution" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Um lugar único para os setores trocarem tarefas, avisos e mensagens, com prazo, anexos, mural e chat, sem depender de conversa espalhada.**
+
+</div>
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="warning">
+    Tarefa e aviso entre setores se perdem em conversa de WhatsApp, e-mail e corredor, sem prazo visível nem histórico central.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    Tarefas com prazo e anexo, mural com controle de quem leu, chat por setor e mensagem direta, tudo num só lugar.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Linha do tempo
+
+<div class="tabela-centro tabela-tempo">
+
+| Quando | O que aconteceu |
+|---|---|
+| **jun/2026** | Pedido de Edinar, gerente administrativa. Início do desenvolvimento |
+| **fim de jun/2026** | Pronto para uso inicial e validação |
+| **set/2026** | Aguardando apresentação aos setores |
+| **Próximo passo** | Apresentação do sistema aos setores e início do uso com um grupo inicial |
+
+</div>
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Tarefas entre setores" icon="approve-check-circle">
+    Qualquer usuário cria tarefas para qualquer setor, com prazo, anexos e comentários. Mudanças de prazo ficam registradas, e cada pessoa tem sua lista de "minhas tarefas".
+  </Card>
+  <Card title="Mural com controle de leitura" icon="pencil">
+    Publicações com imagem, controle de quem leu (visível para gestores) e enquetes com votação.
+  </Card>
+  <Card title="Chat em três níveis" icon="laptop">
+    Conversa geral, chat por setor e mensagens diretas entre duas pessoas, com contagem de não lidas.
+  </Card>
+  <Card title="Perfis de acesso" icon="setting">
+    Administrador, gestor e usuário. O administrador gerencia usuários e setores.
+  </Card>
+</CardGrid>
+
+## O que ele faz
+
+- **Tarefas entre setores**, com prazo, anexos e comentários
+- **Mural de avisos**, com imagem, controle de leitura e enquetes
+- **Chat**: geral, por setor e direto
+- **Calendário** de eventos
+- **Notificações** e indicação de presença (quem está online)
+- **Perfil pessoal** com foto
+
+## O que falta para entrar em uso
+
+1. Apresentação do sistema aos setores
+2. Início do uso e validação com um grupo inicial
+3. Ajustes a partir do retorno dos usuários e liberação para todos os setores
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    **Edinar**, gerente administrativa.
+  </Card>
+  <Card title="Quem vai usar" icon="laptop">
+    Previsto para todos os setores.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Evolui conforme a necessidade, previsto para uso contínuo.
+  </Card>
+</CardGrid>
+
+
+## Telas do sistema
+
+*Todos os prints usam dados de exemplo.*
+
+**Acesso:** entrada com usuário e senha.
+
+![Tela de login do CooperConecta](../../../assets/cooperconecta/login.png)
+
+**Painel:** visão geral das tarefas do setor (ou de todos os setores), com contadores de pendentes, em andamento, concluídas, vencidas e a aprovar.
+
+![Painel do CooperConecta](../../../assets/cooperconecta/painel.png)
+
+**Nova tarefa:** título, descrição, setor, prioridade, prazo, responsável, tipo de demanda, anexo e, se necessário, aprovação do gestor na conclusão.
+
+![Criação de tarefa no CooperConecta](../../../assets/cooperconecta/nova-tarefa.png)
+
+**Lista de tarefas:** todas as tarefas com busca e filtros por setor, status, prioridade e tipo.
+
+![Lista de tarefas do CooperConecta](../../../assets/cooperconecta/tarefas.png)
+
+**Mural:** comunicados para todos os colaboradores ou para um grupo, com imagem opcional e enquete.
+
+![Criação de comunicado no mural do CooperConecta](../../../assets/cooperconecta/novo-comunicado.png)
+
+![Mural institucional do CooperConecta](../../../assets/cooperconecta/mural.png)
+
+**Chat:** canal aberto a todos os colaboradores, além de conversa por setor e privada.
+
+![Bate Papo Geral do CooperConecta](../../../assets/cooperconecta/chat.png)
+
+**Administração de setores:** cadastro dos setores da empresa, gerenciado pelo administrador.
+
+![Cadastro de setores do CooperConecta](../../../assets/cooperconecta/setores.png)

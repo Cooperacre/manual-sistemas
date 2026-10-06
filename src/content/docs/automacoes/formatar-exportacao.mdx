@@ -1,0 +1,96 @@
+---
+title: "Formatar Exportação"
+description: "Ferramenta que formata a exportação do VFT Manager (sistema da VEJA) para colar direto na planilha Controle Geral do setor de Compras."
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Em uso" variant="success" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Converte a exportação do VFT Manager (sistema da VEJA) para o formato exato que cola direto na planilha Controle Geral, sem ajustar coluna por coluna à mão.**
+
+</div>
+
+O VFT Manager exporta num formato diferente do que a planilha usa: data técnica, CPF sem máscara, colunas fora de ordem, linha de totais indevida.
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="information">
+    Cada exportação é ajustada à mão (data, máscara de CPF, ordem de colunas e formatação) antes de ir para a planilha Controle Geral.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    O usuário exporta do VFT Manager, roda o programa e, em segundos, cola o resultado pronto, já formatado e sempre igual, na planilha Controle Geral.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Entrega no formato exato do Controle Geral" icon="approve-check-circle">
+    Reconhece as colunas pelo nome, mesmo se a exportação vier fora de ordem, e replica a formatação do Controle Geral (fonte, tamanho, borda, alinhamento e largura de coluna), não só os dados.
+  </Card>
+  <Card title="Avisa sem travar" icon="setting">
+    Romaneio repetido, CPF com dígito errado, data ilegível, produto fora do esperado: aparecem como aviso numa aba de conferência, sem impedir a geração do arquivo.
+  </Card>
+  <Card title="Sem limite, sem custo, em segundos" icon="rocket">
+    Executável local: sem cota, sem plano pago e sem fila. Uma exportação pequena ou uma grande fica pronta em segundos, quantas vezes for preciso, e os dados ficam só na máquina de quem usa.
+  </Card>
+  <Card title="Mesmo resultado, sempre" icon="approve-check-circle">
+    Regras fixas, sem inteligência artificial na execução: a mesma exportação gera sempre exatamente a mesma planilha, sem variar de um dia para o outro nem de uma pessoa para outra.
+  </Card>
+</CardGrid>
+
+## O que ele arruma
+
+- Converte a data para o padrão brasileiro.
+- Aplica a máscara de CPF (incluindo os que começam com zero).
+- Reordena as colunas na ordem exata do Controle Geral, já deixando o espaço em branco certo no meio para a colagem cair no lugar certo.
+- Copia a formatação do Controle Geral (fonte, tamanho, bordas, alinhamento, largura de coluna).
+- Remove a linha de totais que o VFT Manager acrescenta na exportação.
+- Encontra as colunas certas pelo nome, mesmo se a exportação vier com colunas fora de ordem ou faltando ajuste.
+
+## Avisos que ele mostra (sem travar a geração do arquivo)
+
+- Romaneio repetido ou em branco na mesma exportação.
+- CPF com quantidade de dígitos diferente do esperado.
+- Data que não conseguiu interpretar.
+- Quantidade zerada, negativa ou inválida.
+- Produto diferente do esperado (as fórmulas de valor do Controle Geral partem do preço de um produto específico; outro produto sai com valor errado se não for ajustado).
+- Mais de uma cooperativa misturada na mesma exportação.
+
+Os avisos ficam também numa aba de conferência, junto com os dados, para revisão antes de colar no Controle Geral.
+
+## Pontos de atenção
+
+- Reconhece as colunas pelo nome: se o VFT Manager renomear uma coluna, o programa avisa quais não encontrou e pede para refazer a exportação.
+- Entrega na ordem de colunas do Controle Geral: se a planilha mudar essa ordem, o programa precisa de ajuste.
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    **Heitor Facundo**, setor de Compras.
+  </Card>
+  <Card title="Quem usa" icon="laptop">
+    **Heitor Facundo**, setor de Compras.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Temporário: o VFT Manager e a planilha Controle Geral deixam de ser usados após o go live do TOTVS (previsto 01/01/2027).
+  </Card>
+</CardGrid>
+

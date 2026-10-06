@@ -1,0 +1,87 @@
+---
+title: "Meta Pipeline"
+description: "Automação que mantém uma cópia atualizada das informações do Meta e a disponibiliza, com chave de acesso, como fonte única de dados para os demais sistemas."
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Em uso" variant="success" size="large" />
+  <Badge text="Infraestrutura, sem tela" variant="note" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Uma automação que copia, em intervalos predefinidos (por padrão, a cada 5 minutos), as informações do Meta e as disponibiliza por uma API (a porta pela qual um sistema consulta os dados de outro), protegida por chave de acesso, como fonte única de dados para todos os demais sistemas.**
+
+</div>
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="warning">
+    Cada sistema precisaria buscar do Meta, por conta própria, as informações de que precisa.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    Uma única fonte de dados, sempre atualizada, que todos os demais sistemas consultam com a sua chave de acesso.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Linha do tempo
+
+<div class="tabela-centro tabela-tempo">
+
+| Quando | O que aconteceu |
+|---|---|
+| **jul/2026** | Início do desenvolvimento, iniciativa do desenvolvedor, como infraestrutura de apoio |
+| **Estado atual** | Em uso, rotina automática agendada no computador do T.I. |
+
+</div>
+
+## O que ele faz
+
+Faz, em intervalos predefinidos (por padrão, a cada 5 minutos), uma cópia das informações do Meta e a disponibiliza por uma API protegida por chave de acesso. Os demais sistemas leem dessa cópia, em vez de cada um buscar os dados por conta própria. Com isso, a alimentação dos sistemas e planilhas passa a ter uma fonte única, e um sistema novo só precisa pedir o que a automação já traz.
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Sempre atualizado" icon="approve-check-circle">
+    A cópia é renovada em intervalos predefinidos, e os sistemas trabalham com os dados mais recentes, sem exportação nem digitação.
+  </Card>
+  <Card title="Uma fonte única de dados" icon="rocket">
+    Todos os sistemas leem do mesmo lugar, então os números batem entre si. Um sistema novo só precisa consultar o que ela já oferece.
+  </Card>
+</CardGrid>
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    Iniciativa do desenvolvedor, como infraestrutura de apoio aos demais sistemas.
+  </Card>
+  <Card title="Quem usa" icon="laptop">
+    Não tem usuário direto: alimenta outros sistemas internos, por rotina automática.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Temporário: descontinuação prevista com a migração do Meta para o TOTVS (go live em 01/01/2027). Depois disso, a extração precisará ser refeita para o TOTVS ou encerrada.
+  </Card>
+</CardGrid>
+
+
+## Telas do sistema
+
+Não se aplica: é uma automação sem tela, sem interface para usuário final.
+
+## Planilhas relacionadas
+
+Fornece os dados do Meta para as planilhas de controle que dependem deles.

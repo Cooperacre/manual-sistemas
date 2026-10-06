@@ -1,0 +1,1888 @@
+/* === Identidade visual Cooperacre === */
+
+:root {
+  /* Aumenta a largura da área de conteúdo em ~10% (padrão Starlight: ~45rem) */
+  --sl-content-width: 50rem;
+  --cx-tabela-borda: #cbd5e1;
+  --cx-tabela-divisor: #e2e8f0;
+  --cx-tabela-cabecalho: #f1f5f9;
+  --cx-tabela-linha-alternada: #f8fafc;
+  --cx-tabela-cabecalho-texto: #1e293b;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #0f2f1c;
+  --sl-color-accent: #21c25e;
+  --sl-color-accent-high: #86efac;
+  --cx-tabela-borda: #334155;
+  --cx-tabela-divisor: #334155;
+  --cx-tabela-cabecalho: #1e293b;
+  --cx-tabela-linha-alternada: #172033;
+  --cx-tabela-cabecalho-texto: #e2e8f0;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #dcfce7;
+  --sl-color-accent: #21c25e; /* verde PicPay: fundos, ícones e botões */
+  --sl-color-accent-high: #15803d; /* mesmo verde, escurecido para texto e links (contraste) */
+  --sl-color-text-accent: #15803d;
+}
+
+/* === Tipografia === */
+
+/* Justify universal */
+.sl-markdown-content p {
+  text-align: justify;
+}
+
+/* Blocos especiais mantêm alinhamento próprio, sem recuo de parágrafo. */
+.sl-markdown-content li p,
+.sl-markdown-content aside p,
+.sl-markdown-content details p,
+.sl-markdown-content table p {
+  text-indent: 0;
+  text-align: left;
+}
+
+/* Glossário: parágrafos curtos, com alinhamento simples para leitura rápida. */
+.sl-markdown-content .glossario p {
+  text-indent: 0;
+  text-align: left;
+}
+
+/* Sem indent no parágrafo que só tem imagem, nem na legenda de uma linha logo antes */
+.sl-markdown-content p:has(> img:only-child),
+.sl-markdown-content p:has(+ p > img:only-child) {
+  text-indent: 0;
+}
+
+/* Links no corpo do texto: negrito, sem sublinhado (volta só no hover) */
+.sl-markdown-content a {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sl-markdown-content a:hover {
+  text-decoration: underline;
+}
+
+/* Hierarquia de subtítulos */
+.sl-markdown-content h2 {
+  font-size: 1.45rem;
+  margin-top: 2rem;
+}
+
+.sl-markdown-content h3 {
+  font-size: 1.15rem;
+  margin-top: 1.5rem;
+}
+
+.sl-markdown-content h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  color: var(--sl-color-accent);
+}
+
+/* Tabelas: ocupa a largura disponível, alinhadas ao topo (evita fileira
+   torta quando uma célula tem mais linhas de texto que as vizinhas) */
+.sl-markdown-content table {
+  width: 100%;
+  table-layout: auto;
+}
+
+.sl-markdown-content table td,
+.sl-markdown-content table th {
+  vertical-align: top;
+}
+
+.sl-markdown-content table th {
+  text-align: center;
+}
+
+/* Acabamento comum das tabelas do manual: neutro, legível e sem competir
+   com os selos de situação. As variantes abaixo continuam definindo apenas
+   a disposição das colunas. */
+@media screen {
+  .sl-markdown-content table {
+    border: 1px solid var(--cx-tabela-borda);
+    border-collapse: separate;
+    border-radius: 10px;
+    border-spacing: 0;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+  }
+
+  .sl-markdown-content table th,
+  .sl-markdown-content table td {
+    border-bottom: 1px solid var(--cx-tabela-divisor);
+    border-right: 1px solid var(--cx-tabela-divisor);
+    padding: 0.75rem 0.9rem;
+  }
+
+  .sl-markdown-content table th {
+    background: var(--cx-tabela-cabecalho);
+    color: var(--cx-tabela-cabecalho-texto);
+    font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+    font-weight: 800;
+  }
+
+  .sl-markdown-content table tbody tr:nth-child(even) td {
+    background: var(--cx-tabela-linha-alternada);
+  }
+
+  .sl-markdown-content table tr > :last-child {
+    border-right: 0;
+  }
+
+  .sl-markdown-content table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+/* Sistema de tabelas: estas classes descrevem apenas a estrutura da tabela.
+   Fonte, altura de linha e alinhamento vertical vivem aqui; as regras abaixo
+   de cada variante cuidam somente de largura e alinhamento das colunas. */
+.sl-markdown-content :is(
+  .tabela-linha-tempo,
+  .tabela-resumo,
+  .tabela-padrao,
+  .tabela-situacao,
+  .tabela-modelo
+) table td {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  vertical-align: middle;
+}
+
+/* Tabela pequena, centralizada na página e com o texto das células centralizado */
+.sl-markdown-content .tabela-centro table {
+  display: table;
+  width: auto;
+  margin-inline: auto;
+}
+
+.tabela-centro td,
+.tabela-centro th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Linha do tempo das fichas: tabela na largura da coluna, datas sem quebrar linha */
+.sl-markdown-content .tabela-centro.tabela-tempo td,
+.sl-markdown-content .tabela-centro.tabela-tempo th {
+  vertical-align: middle;
+}
+
+.sl-markdown-content .tabela-centro.tabela-tempo table {
+  width: 100%;
+}
+
+.tabela-centro.tabela-tempo th:nth-child(1),
+.tabela-centro.tabela-tempo td:nth-child(1) {
+  white-space: nowrap;
+  width: 1%;
+  padding-inline: 1.25rem;
+}
+
+.tabela-centro.tabela-tempo th:nth-child(2),
+.tabela-centro.tabela-tempo td:nth-child(2) {
+  text-align: left;
+}
+
+
+/* Catálogo > Linha do tempo: layout automático, colunas curtas (Início,
+   Área, Situação) nunca quebram linha, "Para que serve" absorve o espaço
+   que sobra */
+.tabela-linha-tempo th:nth-child(1),
+.tabela-linha-tempo td:nth-child(1) {
+  white-space: nowrap;
+}
+
+.tabela-linha-tempo th:nth-child(5),
+.tabela-linha-tempo td:nth-child(5) {
+  white-space: nowrap;
+}
+
+.tabela-linha-tempo td:nth-child(1),
+.tabela-linha-tempo td:nth-child(2),
+.tabela-linha-tempo td:nth-child(3),
+.tabela-linha-tempo td:nth-child(5) {
+  text-align: center;
+}
+
+.tabela-linha-tempo td:nth-child(4) {
+  text-align: justify;
+}
+
+/* Tabelas-resumo de 3 colunas (Planilhas, Automações): mesmo
+   tratamento visual da linha do tempo, adaptado pro número de colunas */
+.tabela-resumo th:nth-child(1),
+.tabela-resumo td:nth-child(1),
+.tabela-resumo th:nth-child(3),
+.tabela-resumo td:nth-child(3) {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.tabela-resumo td:nth-child(2) {
+  text-align: justify;
+}
+
+/* Tabela de texto (governança, introdução, ficha da Filial IV): mesmo visual
+   das tabelas do catálogo, com as colunas curtas centralizadas e a última
+   coluna em parágrafo justificado */
+.sl-markdown-content .tabela-padrao table td {
+  text-align: center;
+}
+
+.tabela-padrao td:last-child {
+  text-align: justify;
+}
+
+/* Tabela-resumo centralizada (ex.: Filiais, com uma linha só) */
+.tabela-resumo.tabela-centro td:nth-child(2) {
+  text-align: center;
+  text-indent: 0;
+}
+
+/* Cartões empilhados em mobile: mesmo tratamento pras duas tabelas largas do
+   catálogo (Sistemas com 5 colunas; Planilhas/Automações/Filiais com 3),
+   que não cabem lado a lado na coluna de conteúdo. O rótulo de cada campo vem
+   do próprio cabeçalho da tabela (atributo data-th, preenchido pelo script em
+   astro.config.mjs), em vez de texto fixo por coluna, pra não depender do
+   nome exato de cada tabela (ex. "Situação" x "Quem usa"). */
+@media screen and (max-width: 767px) {
+  .tabela-linha-tempo table,
+  .tabela-linha-tempo tbody,
+  .tabela-linha-tempo tr,
+  .tabela-linha-tempo td,
+  .tabela-resumo table,
+  .tabela-resumo tbody,
+  .tabela-resumo tr,
+  .tabela-resumo td {
+    display: block !important;
+  }
+
+  .tabela-linha-tempo thead,
+  .tabela-resumo thead {
+    display: none !important;
+  }
+
+  .tabela-linha-tempo tr,
+  .tabela-resumo tr {
+    border: 1px solid var(--sl-color-hairline-light) !important;
+    border-radius: 6px;
+    padding: 0.6rem 0.8rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+
+  .tabela-linha-tempo td,
+  .tabela-resumo td {
+    border: none !important;
+    padding: 0.15rem 0 !important;
+    text-align: left !important;
+    text-indent: 0 !important;
+    white-space: normal !important;
+  }
+
+  .tabela-linha-tempo td:nth-child(1) {
+    font-weight: 600;
+    color: var(--sl-color-gray-3);
+  }
+
+  .tabela-linha-tempo td:nth-child(2),
+  .tabela-resumo td:nth-child(1) {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .tabela-linha-tempo td[data-th]::before,
+  .tabela-resumo td[data-th]::before {
+    content: attr(data-th) ": ";
+    font-weight: 600;
+  }
+
+  .tabela-linha-tempo td:nth-child(1)::before,
+  .tabela-linha-tempo td:nth-child(2)::before,
+  .tabela-resumo td:nth-child(1)::before {
+    content: none;
+  }
+}
+
+/* Tabela de versões do webapp: cartões empilhados em mobile */
+@media screen and (max-width: 767px) {
+  .table-versoes table,
+  .table-versoes tbody,
+  .table-versoes tr,
+  .table-versoes td {
+    display: block !important;
+  }
+
+  .table-versoes thead {
+    display: none !important;
+  }
+
+  .table-versoes tr {
+    border: 1px solid var(--sl-color-hairline-light) !important;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .table-versoes td {
+    border: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    gap: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .table-versoes td:first-child {
+    font-weight: 600;
+    padding-bottom: 0.15rem !important;
+    border-bottom: 1px solid var(--sl-color-hairline-light) !important;
+  }
+
+  .table-versoes td:nth-child(2)::before { content: "Para quem: "; font-weight: 600; flex-shrink: 0; }
+  .table-versoes td:nth-child(3)::before { content: "Link: ";      font-weight: 600; flex-shrink: 0; }
+}
+
+/* Primeira coluna sem quebra de linha em mobile (tabela específica) */
+@media screen and (max-width: 767px) {
+  .table-nowrap-col1 td:first-child,
+  .table-nowrap-col1 th:first-child {
+    white-space: nowrap;
+  }
+}
+
+/* Tabela de documentos do embarque: cartões empilhados em mobile */
+@media screen and (max-width: 767px) {
+  .table-docs table,
+  .table-docs tbody,
+  .table-docs tr,
+  .table-docs td {
+    display: block !important;
+  }
+
+  .table-docs thead {
+    display: none !important;
+  }
+
+  .table-docs tr {
+    border: 1px solid var(--sl-color-hairline-light) !important;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .table-docs td {
+    border: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    gap: 0.25rem;
+    line-height: 1.3;
+  }
+
+  /* Primeira célula (Documento): título do cartão */
+  .table-docs td:first-child {
+    font-weight: 600;
+    padding-bottom: 0.15rem !important;
+    border-bottom: 1px solid var(--sl-color-hairline-light) !important;
+  }
+
+  /* Labels automáticos para as demais colunas */
+  .table-docs td:nth-child(2)::before { content: "Emite: "; font-weight: 600; flex-shrink: 0; }
+  .table-docs td:nth-child(3)::before { content: "Vias: ";  font-weight: 600; flex-shrink: 0; }
+  .table-docs td:nth-child(4)::before { content: "Destino: "; font-weight: 600; flex-shrink: 0; }
+}
+
+/* === Imagens de conteúdo === */
+
+/* Prints padronizados: largura fixa (mesmo tamanho pra qualquer print,
+   pequeno ou grande); max-width:100% só evita estourar em tela estreita */
+.sl-markdown-content img {
+  border-radius: 6px;
+  border: 1px solid var(--sl-color-hairline-light);
+  width: 800px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto;
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+
+.sl-markdown-content img:hover {
+  opacity: 0.88;
+}
+
+/* Print de janela de app estreita (ex.: gerador de ficha): não força
+   os 800px padrão, senão estica e borra */
+.sl-markdown-content .cx-print-estreito img {
+  width: auto;
+  max-height: 480px;
+}
+
+/* Legenda: parágrafo itálico imediatamente após parágrafo de imagem */
+.sl-markdown-content p:has(img) + p > em:only-child {
+  display: block;
+  text-align: center;
+  color: var(--sl-color-gray-3);
+  font-size: 0.82em;
+  font-style: italic;
+  text-indent: 0 !important;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* === Cards da homepage === */
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 600px), print {
+  .home-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.home-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 8px;
+  text-decoration: none !important;
+  color: var(--sl-color-text) !important;
+  transition: border-color 0.15s;
+}
+
+.home-card:hover {
+  border-color: var(--sl-color-accent);
+}
+
+.home-card-icon {
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sl-color-accent-low);
+  border-radius: 6px;
+  color: var(--sl-color-accent-high);
+}
+
+.home-card-icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.home-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.home-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.home-card-desc {
+  font-size: 0.875rem;
+  color: var(--sl-color-gray-2);
+  line-height: 1.4;
+  text-align: left !important;
+  text-indent: 0 !important;
+}
+
+.home-card-link {
+  font-size: 0.8rem;
+  color: var(--sl-color-accent);
+  margin-top: 0.2rem;
+}
+
+/* === Listas numeradas: remove círculo do Steps, padroniza com ol comum === */
+
+.sl-steps > li::before {
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: var(--sl-text-sm) !important;
+  font-weight: 700 !important;
+  color: var(--sl-color-text) !important;
+}
+
+/* === Botão de impressão === */
+
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--sl-color-accent);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  /* No mobile, ocupa largura total para facilitar o toque */
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 640px), print {
+  .btn-print {
+    width: auto;
+  }
+}
+
+.btn-print:hover {
+  opacity: 0.85;
+}
+
+/* === Checklist: escondido na tela === */
+
+.print-checklist {
+  display: none;
+}
+
+/* === Botão de emergência === */
+
+.emergency-wrap {
+  margin-top: 2.5rem;
+  border: 2px dashed var(--sl-color-accent);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.emergency-wrap summary {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+
+.emergency-wrap summary::-webkit-details-marker { display: none; }
+
+.emergency-wrap[open] summary {
+  border-bottom: 1px solid var(--sl-color-accent);
+}
+
+.emergency-content {
+  padding: 12px 16px;
+  font-size: 0.95em;
+}
+
+/* === IMPRESSÃO / PDF DA FICHA === */
+
+.cx-imprimir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--cx-neutro);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cx-neutro);
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.cx-imprimir:hover {
+  background: var(--cx-neutro);
+  color: #fff;
+}
+
+@media print {
+  /* Fica só o conteúdo da ficha: sem menu, busca, índice lateral e botão */
+  header.header,
+  .sidebar,
+  .right-sidebar,
+  mobile-starlight-toc,
+  starlight-menu-button,
+  footer,
+  .pagination-links,
+  .cx-imprimir,
+  .cx-lightbox {
+    display: none !important;
+  }
+
+  :root {
+    --sl-content-width: 100%;
+    --sl-sidebar-width: 0px;
+    --sl-nav-height: 0px;
+  }
+
+  .main-frame,
+  .main-pane,
+  .content-panel {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Mantém as cores dos selos, ícones e destaques no papel */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sl-markdown-content img {
+    max-width: 100% !important;
+    width: auto;
+  }
+
+  .sl-markdown-content .card,
+  .sl-markdown-content .destaque,
+  .sl-markdown-content img,
+  .sl-markdown-content tr {
+    break-inside: avoid;
+  }
+
+  /* Título nunca fica sozinho no fim da página: acompanha o bloco seguinte */
+  .sl-markdown-content .sl-heading-wrapper,
+  .sl-markdown-content h2,
+  .sl-markdown-content h3,
+  .sl-markdown-content h4 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+
+  /* Legenda de print (parágrafo antes da imagem) fica junto da imagem */
+  .sl-markdown-content p:has(+ p > img:only-child),
+  .sl-markdown-content p:has(+ p > img:only-child) + p {
+    break-after: avoid;
+  }
+
+  .sl-markdown-content p:has(> img:only-child) {
+    break-before: avoid;
+  }
+
+  /* Rótulo em negrito sozinho numa linha (ex.: "Protocolo e integridade") fica junto da lista que ele apresenta */
+  .sl-markdown-content p:has(> strong:only-child) {
+    break-after: avoid;
+  }
+
+  .sl-markdown-content p:has(img),
+  .sl-markdown-content .starlight-aside,
+  .sl-markdown-content .tabela-linha-tempo table,
+  .sl-markdown-content .tabela-resumo table,
+  .sl-markdown-content .tabela-padrao table,
+  .sl-markdown-content .tabela-centro table {
+    break-inside: avoid;
+  }
+
+  /* Cartões: mantém a grade da tela (2 colunas) e não corta um cartão no meio */
+  .sl-markdown-content .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sl-markdown-content .card-grid > .card {
+    break-inside: avoid;
+  }
+
+  .sl-markdown-content .cx-figura {
+    display: flow-root;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .sl-markdown-content .cx-figura > p {
+    break-after: avoid;
+    break-before: avoid;
+  }
+
+  /* Só o "Antes e depois" (2 cartões) tenta caber inteiro; as demais grades quebram entre cartões */
+  .sl-markdown-content .antes-depois {
+    break-inside: avoid;
+  }
+
+  /* Parágrafos e listas curtos não são cortados no meio */
+  .sl-markdown-content p,
+  .sl-markdown-content li,
+  .sl-markdown-content ul,
+  .sl-markdown-content ol {
+    break-inside: avoid;
+  }
+
+  /* Prints menores no papel: cabem dois por página em vez de deixar um vão em branco */
+  .sl-markdown-content img {
+    max-height: 11cm;
+    object-fit: contain;
+  }
+
+  @page {
+    size: A4;
+    margin: 2cm 1.5cm 1.5cm;
+
+    @top-left {
+      content: "Cooperacre · Manual de Sistemas";
+      font-family: "Segoe UI", "Nunito", sans-serif;
+      font-size: 9pt;
+      color: #475569;
+    }
+
+    @top-right {
+      content: "Página " counter(page) " de " counter(pages);
+      font-family: "Segoe UI", "Nunito", sans-serif;
+      font-size: 9pt;
+      color: #475569;
+    }
+  }
+}
+
+/* Selos de estágio: fonte arredondada, negrito, texto centralizado e respiro interno maior */
+.selos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.selos .sl-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Nunito', 'Quicksand', 'Segoe UI Rounded', 'Varela Round', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  padding: 0.55rem 1.4rem;
+  border-radius: 999px;
+}
+
+/* === Sistema de cores (papéis fixos, tons modernos na faixa 600 a 700, como no Bootstrap/Tailwind) ===
+   Uma cor por papel, usada igual em selos, ícones dos cartões e destaques. Letra branca sobre a cor,
+   exceto no amarelo de atenção, que leva texto escuro (branco sobre amarelo não tem contraste). */
+:root {
+  --cx-sucesso: #0F8A5F;   /* verde-esmeralda: pronto, em uso, concluído */
+  --cx-info: #2D6CDF;      /* azul moderno: informação, datas, marcos */
+  --cx-destaque: #E8590C;  /* laranja: em desenvolvimento, novidade */
+  --cx-atencao: #F5C400;   /* amarelo: atenção, aguardando decisão */
+  --cx-atencao-texto: #1f2937;
+  --cx-perigo: #E0426B;    /* rosa-vermelho: parado, risco */
+  --cx-neutro: #2F5D7C;    /* ardósia: rótulos neutros */
+}
+
+/* Selos */
+.selos .sl-badge { color: #fff; border: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14); }
+.selos .sl-badge.success { background: var(--cx-sucesso); }
+.selos .sl-badge.note    { background: var(--cx-info); }
+.selos .sl-badge.tip     { background: var(--cx-destaque); }
+.selos .sl-badge.caution { background: var(--cx-atencao); color: var(--cx-atencao-texto); }
+.selos .sl-badge.danger  { background: var(--cx-perigo); }
+
+/* Cartões: texto do corpo segue o padrão do site (justificado + indentação);
+   título e ícone centralizados como bloco */
+.sl-markdown-content .card .title,
+.sl-markdown-content .card .title span {
+  justify-content: center !important;
+  text-align: center !important;
+  text-indent: 0 !important;
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+}
+
+.sl-markdown-content .card .icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--cx-info);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quando os cards de um mesmo grupo ficam com a mesma altura (a do mais alto),
+   o corpo de um card com pouco texto centraliza na vertical, em vez de sobrar
+   vazio embaixo de um texto colado no topo */
+.sl-markdown-content .card .body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sl-markdown-content .card .body p {
+  text-align: justify;
+  text-indent: 0;
+}
+
+/* Card com pouco texto (marcado via script em astro.config.mjs): sem justificar
+   nem indentar, e centralizado como o título, em vez de ficar torto */
+.sl-markdown-content .card .body.cx-card-curto,
+.sl-markdown-content .card .body.cx-card-curto p {
+  text-align: center;
+  text-indent: 0;
+}
+
+.sl-markdown-content .card:nth-child(4n + 1) .icon { background: var(--cx-sucesso); }
+.sl-markdown-content .card:nth-child(4n + 2) .icon { background: var(--cx-info); }
+.sl-markdown-content .card:nth-child(4n + 3) .icon { background: var(--cx-destaque); }
+.sl-markdown-content .card:nth-child(4n + 4) .icon { background: var(--cx-perigo); }
+
+/* Subtítulo discreto, ex.: nível de mercado abaixo do cargo/departamento */
+.cx-subtitulo {
+  display: block;
+  font-size: 0.85em;
+  color: var(--sl-color-gray-3);
+  margin-top: 0.15rem;
+}
+
+/* Frase de destaque */
+.destaque {
+  font-size: 1.2rem;
+  line-height: 1.55;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-left: 5px solid var(--cx-info);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: color-mix(in srgb, var(--cx-info) 8%, transparent);
+}
+
+.sl-markdown-content .destaque p {
+  text-align: justify;
+  text-indent: 0;
+  margin: 0;
+}
+
+/* Lightbox: expande a imagem clicada por cima da página */
+.cx-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+}
+
+.cx-lightbox--aberto {
+  display: flex;
+}
+
+.cx-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Antes (atenção) e depois (sucesso) */
+.sl-markdown-content .antes-depois .card:nth-child(1) .icon { background: var(--cx-atencao); color: var(--cx-atencao-texto); }
+.sl-markdown-content .antes-depois .card:nth-child(2) .icon { background: var(--cx-sucesso); }
+
+/* Painel "Nesta página" (TOC da direita): a largura calculada padrão do tema
+   sobra muito em telas largas, deixando bastante espaço vazio. Reduzida pra
+   uma largura fixa mais compacta, em vez de proporcional à viewport. */
+.right-sidebar-panel {
+  padding: 0.75rem 1rem;
+}
+
+.right-sidebar-panel .sl-container {
+  width: 13rem;
+}
+
+@media (min-width: 72rem) {
+  .right-sidebar-panel .sl-container {
+    max-width: 13rem;
+  }
+}
+
+.right-sidebar-panel ul {
+  margin: 0;
+}
+
+/* === Página inicial === */
+
+/* Faixa de fundo suave atrás do topo da home */
+[data-has-hero] .hero {
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--sl-color-accent) 16%, transparent) 0%, transparent 70%);
+  border-radius: 0 0 2rem 2rem;
+  padding-bottom: 2rem;
+  padding-top: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+[data-has-hero] .hero h1 {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  color: var(--sl-color-white); /* preto no tema claro, branco no escuro */
+}
+
+/* Mesma largura e mesma borda esquerda do topo (hero): nada de bloco mais largo ou recuado */
+.cx-home {
+  width: 100%;
+}
+
+.cx-home h2 {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  margin-top: 2.5rem;
+}
+
+/* Panorama: indicadores fora do hero, com densidade de resumo em vez de painel. */
+.cx-panorama {
+  border-top: 1px solid var(--sl-color-hairline-light);
+  margin-top: 1.5rem;
+  padding-top: 2rem;
+}
+
+.cx-panorama h2 {
+  margin-top: 0;
+}
+
+.cx-panorama > p {
+  color: var(--sl-color-text);
+  font-size: 0.95rem;
+  margin: 0.45rem 0 0;
+  text-indent: 0;
+}
+
+.cx-panorama .cx-numero {
+  gap: 0.15rem;
+  min-height: 7.25rem;
+  padding: 0.9rem 1rem;
+}
+
+.cx-panorama .cx-numero-valor {
+  font-size: 2.15rem;
+}
+
+.cx-panorama .cx-numero-rotulo {
+  font-size: 0.92rem;
+  margin-top: 0.2rem;
+}
+
+.cx-panorama .cx-numero-detalhe {
+  font-size: 0.75rem;
+}
+
+.cx-panorama .cx-numero-ver {
+  display: none;
+}
+
+/* Números em destaque */
+.cx-numeros {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: stretch;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 50rem) {
+  .cx-numeros {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cx-numero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  margin: 0;
+  gap: 0.3rem;
+  min-height: 9.5rem;
+  padding: 1.3rem 1rem;
+  border-radius: 14px;
+  background: var(--cx-neutro);
+  color: #fff !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.cx-numero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cx-numero-ver {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* Cartão de total (sem modificador): claro, contorno verde da marca, número em verde */
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
+  background: var(--sl-color-bg);
+  border: 2px solid var(--sl-color-accent);
+  color: var(--sl-color-white) !important;
+}
+
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) .cx-numero-valor {
+  color: var(--sl-color-accent);
+}
+
+.cx-numero--sucesso { background: var(--cx-sucesso); }
+.cx-numero--info { background: var(--cx-info); }
+.cx-numero--destaque { background: var(--cx-destaque); }
+
+.cx-numero-valor {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.cx-numero-rotulo {
+  margin-top: 0.4rem;
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.cx-numero-detalhe {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  opacity: 0.92;
+}
+
+/* Sistemas em destaque */
+.cx-destaques {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .cx-destaques {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cx-destaque-card {
+  margin: 0;
+  font-weight: 400 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.2rem;
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 14px;
+  background: var(--sl-color-bg);
+  text-decoration: none !important;
+  color: var(--sl-color-text) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+/* Funciona no tema claro e no escuro: cores vêm das variáveis do tema */
+.cx-destaque-card span:last-child {
+  color: var(--sl-color-text);
+}
+
+.cx-destaque-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.cx-destaque-card strong {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--sl-color-white);
+}
+
+.cx-destaque-card span:last-child {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.cx-destaque-selo {
+  align-self: flex-start;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.cx-destaque-selo--sucesso { background: var(--cx-sucesso); }
+.cx-destaque-selo--info { background: var(--cx-info); }
+.cx-destaque-selo--destaque { background: var(--cx-destaque); }
+
+/* Cartões de entrada: mesmo padrão da Filial IV, com um pouco mais de vida */
+.cx-home .home-card {
+  font-weight: 400 !important;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.cx-home .home-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão secundário do topo (Governança): contorno na cor de destaque, no mesmo formato de pílula do botão principal */
+[data-has-hero] .hero .sl-link-button.minimal {
+  border: 2px solid var(--sl-color-accent);
+  border-radius: 999px;
+  padding: 0.85rem 1.4rem;
+  color: var(--sl-color-accent-high);
+  background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+/* Ações principais da abertura: leitura mais imediata para quem chega ao manual. */
+[data-has-hero] .hero .sl-link-button {
+  font-weight: 800;
+}
+
+[data-has-hero] .hero .sl-link-button.minimal:hover {
+  background: var(--sl-color-accent);
+  color: var(--sl-color-black);
+}
+
+/* Página "Por situação": resumo de cada seção e tabelas de 3 colunas com a mesma largura */
+.sl-markdown-content .cx-resumo-secao {
+  text-indent: 0;
+  margin-bottom: 0.5rem;
+}
+
+.sl-markdown-content .tabela-situacao table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tabela-situacao th:nth-child(1),
+.tabela-situacao td:nth-child(1) {
+  width: 38%;
+  text-align: center;
+}
+
+.tabela-situacao th:nth-child(2),
+.tabela-situacao td:nth-child(2) {
+  width: 17%;
+  text-align: center;
+}
+
+.tabela-situacao th:nth-child(3),
+.tabela-situacao td:nth-child(3) {
+  width: 45%;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .sl-markdown-content .tabela-situacao table {
+    table-layout: auto;
+  }
+  .tabela-situacao th:nth-child(n),
+  .tabela-situacao td:nth-child(n) {
+    width: auto;
+  }
+}
+
+/* Cartões "Mais recentes": selo de estágio à esquerda e data à direita */
+.cx-destaque-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.cx-destaque-card .cx-destaque-data {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--sl-color-gray-3);
+  text-align: right;
+}
+
+/* === Home: cartões "Explore o manual" (substituem o visual verde apagado) ===
+   Ícone em bloco com degradê esmeralda vivo, título em Nunito, seta que avança no hover */
+.cx-home .home-grid {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .cx-home .home-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 62rem) {
+  .cx-home .home-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.cx-home .home-card {
+  position: relative;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 0;
+  padding: 1.3rem 1.2rem;
+  overflow: hidden;
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 16px;
+  background: var(--sl-color-bg);
+}
+
+/* Faixa de cor fina no topo, cresce no hover */
+.cx-home .home-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, #047857, #10b981);
+  transition: height 0.15s;
+}
+
+.cx-home .home-card:hover::before {
+  height: 7px;
+}
+
+.cx-home .home-card-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(4, 120, 87, 0.35);
+}
+
+.cx-home .home-card-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.cx-home .home-card-title {
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--sl-color-white);
+}
+
+.cx-home .home-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--sl-color-text);
+}
+
+.cx-home .home-card-link {
+  margin-top: 0.5rem;
+  font-family: 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--sl-color-accent);
+  transition: transform 0.15s;
+}
+
+.cx-home .home-card:hover .home-card-link {
+  transform: translateX(4px);
+}
+
+/* Cada entrada do manual recebe uma cor da paleta institucional. O verde fica
+   reservado ao catálogo, enquanto as demais áreas ganham uma identificação
+   própria sem criar uma paleta paralela. */
+.cx-home .home-card {
+  --c1: #047857;
+  --c2: #10b981;
+  --cs: 4, 120, 87;
+}
+
+.cx-home .home-card:nth-child(2) { --c1: #2563eb; --c2: #60a5fa; --cs: 37, 99, 235; }
+.cx-home .home-card:nth-child(3) { --c1: #7c3aed; --c2: #a78bfa; --cs: 124, 58, 237; }
+.cx-home .home-card:nth-child(4) { --c1: #d97706; --c2: #fbbf24; --cs: 217, 119, 6; }
+.cx-home .home-card:nth-child(5) { --c1: #475569; --c2: #64748b; --cs: 71, 85, 105; }
+.cx-home .home-card:nth-child(6) { --c1: #be185d; --c2: #f472b6; --cs: 190, 24, 93; }
+
+.cx-home .home-card::before {
+  background: linear-gradient(90deg, var(--c1), var(--c2));
+}
+
+.cx-home .home-card-icon {
+  background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
+  box-shadow: 0 6px 14px rgba(var(--cs), 0.35);
+}
+
+.cx-home .home-card-link {
+  color: var(--c1);
+}
+
+/* No tema escuro o link do cartão usa o tom mais claro do degradê, para manter o contraste */
+:root[data-theme='dark'] .cx-home .home-card-link {
+  color: var(--c2);
+}
+
+/* === Cartões sem preenchimento, só com faixa colorida à esquerda (mesmo desenho do webapp) === */
+
+/* Números: fundo do tema, faixa à esquerda na cor do papel, número na mesma cor */
+.cx-numero,
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
+  --papel: var(--sl-color-accent);
+  align-items: flex-start;
+  text-align: left;
+  background: var(--sl-color-bg);
+  border: 1px solid var(--sl-color-hairline-light);
+  border-left: 6px solid var(--papel);
+  color: var(--sl-color-white) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.cx-numero--sucesso { --papel: var(--cx-sucesso); background: var(--sl-color-bg); }
+.cx-numero--info { --papel: var(--cx-info); background: var(--sl-color-bg); }
+.cx-numero--destaque { --papel: var(--cx-destaque); background: var(--sl-color-bg); }
+
+.cx-numero .cx-numero-valor,
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) .cx-numero-valor {
+  color: var(--papel);
+}
+
+.cx-numero .cx-numero-detalhe {
+  color: var(--sl-color-text);
+  opacity: 1;
+}
+
+.cx-numero .cx-numero-ver {
+  color: var(--papel);
+  opacity: 1;
+}
+
+/* Destaques: faixa à esquerda na cor do estágio */
+.cx-destaque-card {
+  --papel: var(--sl-color-accent);
+  border-left: 6px solid var(--papel);
+}
+
+.cx-destaque-card:has(.cx-destaque-selo--sucesso) { --papel: var(--cx-sucesso); }
+.cx-destaque-card:has(.cx-destaque-selo--info) { --papel: var(--cx-info); }
+.cx-destaque-card:has(.cx-destaque-selo--destaque) { --papel: var(--cx-destaque); }
+
+/* Explore o manual: navegação neutra. As cores ficam reservadas aos selos e
+   aos estágios dos sistemas, onde carregam significado. */
+.cx-home .home-card {
+  border-left: 1px solid var(--sl-color-hairline-light);
+}
+
+.cx-home .home-card::before {
+  display: none;
+}
+
+/* Explore o manual: visual contido e sem o link repetido no rodapé. */
+.cx-home .home-card {
+  align-items: center;
+  padding: 1rem 1.2rem;
+}
+
+.cx-home .home-card-icon {
+  background: #475569;
+  box-shadow: 0 4px 10px rgba(71, 85, 105, 0.22);
+}
+
+.cx-home .home-card-link {
+  display: none;
+}
+
+.cx-home .home-card-title {
+  font-size: 1.1rem;
+}
+
+.cx-home .home-card-desc {
+  margin: 0;
+}
+
+/* Links com negrito dentro (ex.: [**CooperConecta**](...)) ficavam com negrito duplo (peso 900 sintético),
+   borrado e ilegível. O peso vem só do link, e a cor ganha um verde mais escuro e nítido no tema claro. */
+.sl-markdown-content a strong,
+.sl-markdown-content a b {
+  font-weight: inherit;
+}
+
+.sl-markdown-content table td a {
+  font-weight: 700;
+  color: #1A5A26;
+  letter-spacing: 0.01em;
+}
+
+:root[data-theme='dark'] .sl-markdown-content table td a {
+  color: var(--sl-color-accent);
+}
+
+.sl-markdown-content table td a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Exceção à regra de "negrito dentro de link herda o peso": o título dos cartões da home tem peso próprio */
+.sl-markdown-content .cx-destaque-card strong {
+  font-weight: 800;
+}
+
+/* Tabelas de 2 colunas do Modelo de ficha: largura total, campo à esquerda em negrito,
+   texto centralizado na altura da linha (vertical) e cabeçalho centralizado */
+.sl-markdown-content .tabela-modelo table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tabela-modelo th:nth-child(1),
+.tabela-modelo td:nth-child(1) {
+  width: 30%;
+}
+
+.tabela-modelo th:nth-child(2),
+.tabela-modelo td:nth-child(2) {
+  width: 70%;
+}
+
+.tabela-modelo td {
+  text-align: left;
+}
+
+.sl-markdown-content .tabela-modelo table th {
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .sl-markdown-content .tabela-modelo table {
+    table-layout: auto;
+  }
+  .tabela-modelo th:nth-child(n),
+  .tabela-modelo td:nth-child(n) {
+    width: auto;
+  }
+}
+
+/* Campo de assinatura: só aparece no papel */
+.cx-assinatura {
+  display: none;
+}
+
+@media print {
+  .cx-assinatura {
+    display: block;
+    break-before: page;
+    page-break-before: always;
+    break-inside: avoid;
+    margin-top: 0;
+    padding-top: 2.5rem;
+  }
+
+  .cx-assinatura-titulo {
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 1.4rem;
+  }
+
+  .cx-assinatura-local {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+    margin: 0 0 3rem;
+    font-size: 10pt;
+  }
+
+  .cx-rotulo {
+    font-weight: 700;
+    font-size: 9pt;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #475569;
+  }
+
+  .cx-campo {
+    display: block;
+    border-bottom: 1px solid #94a3b8;
+    height: 1.4em;
+  }
+
+  .cx-campo-local {
+    flex: 1;
+    margin-right: 1.2rem;
+  }
+
+  .cx-campo-data {
+    display: flex;
+    width: 5.2cm;
+    color: #64748b;
+  }
+
+  .cx-campo-data i {
+    flex: 1;
+    font-style: normal;
+  }
+
+  .cx-assinatura-linhas {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .cx-assinatura-linhas > div {
+    flex: 1;
+    text-align: center;
+    font-size: 10pt;
+    margin-top: 0 !important;
+  }
+
+  .cx-assinatura p {
+    text-indent: 0 !important;
+  }
+
+  .cx-linha {
+    display: block;
+    border-top: 1px solid #000;
+    margin-bottom: 5pt;
+  }
+
+  .cx-assinatura-nome {
+    display: block;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-weight: 800;
+    font-size: 11pt;
+    color: #1e293b;
+  }
+
+  .cx-assinatura-funcao {
+    display: block;
+    font-size: 9.5pt;
+    color: #475569;
+    margin-top: 1pt;
+  }
+}
+
+/* Página formal anexada à ficha: o conteúdo da ficha continua sendo contexto
+   informativo; o protocolo é um documento visualmente separado. */
+.cx-protocolo { display: none; }
+
+@media print {
+  .cx-protocolo {
+    display: block;
+    break-before: page;
+    page-break-before: always;
+    break-inside: avoid;
+    margin: 0;
+    padding: 8mm 4mm 0;
+    color: #1e293b;
+  }
+
+  .cx-protocolo-marca {
+    color: #047857;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: .05em;
+    margin: 0 0 3mm !important;
+    text-indent: 0 !important;
+    text-transform: uppercase;
+  }
+
+  .cx-protocolo h2 {
+    border-bottom: 2px solid #047857;
+    color: #1e293b;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-size: 20pt;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 !important;
+    padding: 0 0 4mm;
+  }
+
+  .cx-protocolo-intro {
+    color: #475569;
+    font-size: 10.5pt;
+    margin: 4mm 0 7mm !important;
+    text-indent: 0 !important;
+  }
+
+  .cx-protocolo-tabela {
+    border-collapse: collapse;
+    font-size: 10.5pt;
+    width: 100%;
+  }
+
+  .cx-protocolo-tabela th,
+  .cx-protocolo-tabela td {
+    border: 1px solid #cbd5e1;
+    padding: 3.5mm 4mm;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .cx-protocolo-tabela th {
+    background: #f1f5f9;
+    color: #1e293b;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-weight: 800;
+    width: 31%;
+  }
+
+  .cx-protocolo-tabela td:empty::after {
+    content: ' ';
+    display: block;
+    min-height: 1.15em;
+  }
+
+  .cx-protocolo-tabela .cx-protocolo-campo-longo:empty::after { min-height: 2.8em; }
+
+  .cx-protocolo-declaracao {
+    background: #f8fafc;
+    border-left: 4px solid #2563eb;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 7mm 0 9mm !important;
+    padding: 4mm 5mm;
+    text-align: left;
+    text-indent: 0 !important;
+  }
+
+  .cx-protocolo-local {
+    align-items: flex-end;
+    display: flex;
+    font-size: 10pt;
+    gap: 2mm;
+    margin: 0 0 15mm;
+    text-indent: 0 !important;
+  }
+
+  .cx-protocolo-local span {
+    color: #475569;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-weight: 800;
+  }
+
+  .cx-protocolo-local i {
+    border-bottom: 1px solid #64748b;
+    flex: 1;
+    height: 1.25em;
+  }
+
+  .cx-protocolo-local i:last-child { flex: 0 0 42mm; }
+
+  .cx-protocolo-assinaturas {
+    align-items: start;
+    display: grid;
+    gap: 18mm;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cx-protocolo-assinaturas > div {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 10pt;
+    text-align: center;
+    width: 100%;
+  }
+
+  .cx-protocolo-assinaturas i {
+    border-top: 1px solid #1e293b;
+    display: block;
+    flex: 0 0 0;
+    margin-bottom: 2mm;
+    width: 100%;
+  }
+
+  .cx-protocolo-assinaturas strong {
+    color: #1e293b;
+    display: block;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    font-weight: 800;
+    line-height: 1.2;
+    min-height: 1.2em;
+  }
+
+  .cx-protocolo-assinaturas span {
+    color: #475569;
+    display: block;
+    font-size: 9pt;
+    margin-top: 1mm;
+  }
+
+  .cx-protocolo-rodape {
+    border-top: 1px solid #cbd5e1;
+    color: #64748b;
+    font-size: 8.5pt;
+    margin: 12mm 0 0 !important;
+    padding-top: 3mm;
+    text-align: center;
+    text-indent: 0 !important;
+  }
+}
+
+/* === Página inicial sóbria (teste, 05/10/2026): cartões brancos e neutros, botões sem negrito === */
+.cx-numero,
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque),
+.cx-numero--sucesso,
+.cx-numero--info,
+.cx-numero--destaque {
+  --papel: var(--sl-color-gray-3);
+  background: var(--sl-color-bg);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.cx-numero:hover,
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque):hover {
+  transform: none;
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 0 0 3px var(--sl-color-accent-low);
+}
+
+.cx-numero .cx-numero-valor,
+.cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) .cx-numero-valor {
+  color: var(--sl-color-white);
+}
+
+.cx-numero .cx-numero-ver {
+  color: var(--sl-color-text-accent);
+}
+
+[data-has-hero] .hero .sl-link-button {
+  font-weight: 500;
+}
+
+/* Legibilidade dos cartões do panorama: hierarquia clara (número, rótulo, detalhe) e detalhe maior e mais escuro */
+.cx-panorama .cx-numero {
+  gap: 0.25rem;
+  min-height: 8.5rem;
+  padding: 1.1rem 1.25rem;
+}
+
+.cx-panorama .cx-numero-valor {
+  font-size: 2.3rem;
+  font-weight: 700;
+}
+
+.cx-panorama .cx-numero-rotulo {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 0.35rem;
+}
+
+.cx-panorama .cx-numero .cx-numero-detalhe {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--sl-color-gray-2);
+}
+
+/* Tema claro: identidade verde discreta. Um véu bem leve que desce do topo (sem corte reto nem mancha),
+   texto em preto, como no escuro, para manter o contraste. */
+:root[data-theme='light'][data-has-hero] .hero {
+  background: none;
+  border-radius: 0;
+}
+
+:root[data-theme='light'][data-has-hero] body {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sl-color-accent) 6%, #fff) 0, #fff 30rem) no-repeat, #fff;
+}
+
+/* Tema claro: contorno e textos dos cartões mais firmes, botão principal sem bloco de cor cheia */
+:root[data-theme='light'] .cx-numero,
+:root[data-theme='light'] .cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
+  border-color: #94a3b8;
+}
+
+:root[data-theme='light'] .cx-panorama > p,
+:root[data-theme='light'] .cx-panorama .cx-numero .cx-numero-detalhe {
+  color: #1e293b;
+}
+
+/* Título da abertura em escala de documentação: menor, peso 700, numa linha e sem a coluna vazia do lado */
+[data-has-hero] .hero {
+  grid-template-columns: 1fr;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: 1.5rem;
+}
+
+[data-has-hero] .hero h1 {
+  font-size: clamp(2rem, 4.2vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+[data-has-hero] .hero .tagline {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 44rem;
+}
+
+/* Ícones do "Explore o manual" em verde PicPay (#21c25e), glifo branco, nos dois temas */
+.cx-home .home-card-icon {
+  background: #21c25e; /* verde PicPay */
+  color: #fff;
+  box-shadow: none;
+}
+
+/* Verde PicPay em todo o manual: botão preenchido no verde vivo, com texto escuro para manter o contraste */
+.sl-link-button.primary {
+  background: var(--sl-color-accent);
+  border-color: var(--sl-color-accent);
+  color: #052e16;
+}
+
+.sl-link-button.primary:hover {
+  background: var(--sl-color-accent-high);
+  border-color: var(--sl-color-accent-high);
+  color: #fff;
+}
+
+/* Tema claro: botão preenchido com texto branco, num verde um pouco mais fechado para segurar o contraste */
+:root[data-theme='light'] .sl-link-button.primary {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #fff;
+}
+
+:root[data-theme='light'] .sl-link-button.primary:hover {
+  background: #15803d;
+  border-color: #15803d;
+}
+
+/* Fundo e cartões na nova cor: véu verde-menta leve, filete verde no topo dos cartões e destaque verde ao passar o mouse */
+:root[data-theme='light'][data-has-hero] body {
+  background: radial-gradient(ellipse 55rem 24rem at 50% 0, color-mix(in srgb, #21c25e 16%, #fff) 0%, #fff 100%) no-repeat, #fff;
+}
+
+:root[data-theme='light'] .cx-numero,
+:root[data-theme='light'] .cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
+  border-top: 3px solid #21c25e;
+}
+
+:root[data-theme='light'] .cx-home .home-card:hover {
+  border-color: #21c25e;
+  box-shadow: 0 0 0 3px #dcfce7;
+}
+
+:root[data-theme='dark'] .cx-numero,
+:root[data-theme='dark'] .cx-numero:not(.cx-numero--sucesso):not(.cx-numero--info):not(.cx-numero--destaque) {
+  border-top: 3px solid #21c25e;
+}

@@ -1,0 +1,82 @@
+---
+title: "Conversor de Extrato SICOOB"
+description: "Converte o extrato SICOOB em PDF para Excel, localmente, pronto para importação no sistema Domínio."
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Em uso" variant="success" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Converte o extrato SICOOB de PDF para Excel, localmente e sem depender de ferramenta online, pronto para importar no sistema Domínio.**
+
+</div>
+
+Ferramentas genéricas online fazem a conversão sem controle fino do resultado, e levam dado financeiro sensível a um serviço de terceiros.
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="information">
+    A conversão do extrato em PDF para Excel é feita em ferramenta online genérica, e o arquivo segue para um serviço de terceiros.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    Roda no computador, em segundos, de graça e sem limite de uso, e entrega os dados exatamente no formato que o Contábil precisa, sempre com o mesmo resultado.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Entende lançamento de várias linhas" icon="approve-check-circle">
+    Cada lançamento do SICOOB ocupa duas ou mais linhas no PDF; a ferramenta reconhece a linha principal pelo formato (data, valor, sinal) e junta o detalhamento a ela, sem misturar com o lançamento seguinte.
+  </Card>
+  <Card title="Conferência automática de saldo" icon="pencil">
+    Confere, dia a dia, se saldo anterior mais créditos menos débitos bate com o saldo impresso no extrato. Se não bater, avisa em vez de gerar planilha errada silenciosamente.
+  </Card>
+  <Card title="Roda no próprio computador" icon="laptop">
+    Sem cota de páginas, plano pago nem fila: um extrato de poucas páginas ou de um ano inteiro é convertido em segundos, quantas vezes for preciso. O extrato nunca é enviado a um serviço de terceiros na internet, e funciona até sem conexão.
+  </Card>
+  <Card title="Mesmo resultado, sempre" icon="approve-check-circle">
+    Regras fixas, sem inteligência artificial na execução: o mesmo extrato gera exatamente a mesma planilha hoje, amanhã e daqui a um ano. Não há "dia ruim" nem resultado que muda de uma conversão para outra.
+  </Card>
+</CardGrid>
+
+## Como funciona
+
+O primeiro uso implementado foi para extratos de conta corrente do SICOOB. Cada lançamento ocupa duas ou mais linhas no PDF (uma linha principal com data, documento, histórico e valor, seguida do detalhamento), o que confunde um conversor genérico de tabela. A ferramenta reconhece a linha principal pelo formato (data, valor em reais e sinal) e trata o restante como detalhe daquele mesmo lançamento.
+
+**Conferência automática.** Depois de extrair os lançamentos, a automação confere, dia a dia, se saldo anterior mais créditos menos débitos bate com o saldo do dia impresso no próprio extrato. Se algum lançamento tiver ficado mesclado, duplicado ou perdido na extração, essa conta não fecha, e a automação avisa no console em vez de gerar uma planilha errada silenciosamente.
+
+## Pontos de atenção
+
+- Feito sob medida para o layout do extrato do SICOOB; um extrato de outro banco ou um layout novo do SICOOB pode precisar de ajuste na automação.
+- Se aparecer uma linha fora do padrão esperado, a automação não trava: ela entra como detalhe do lançamento anterior (comportamento conservador), e a conferência de saldo ajuda a notar se isso gerou algum problema.
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    Iniciativa do desenvolvedor, para o setor Contábil.
+  </Card>
+  <Card title="Quem usa" icon="laptop">
+    **Gilcilene**, Contábil.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Até o go live do TOTVS (previsto para 01/01/2027), que terá integração bancária e dispensa a conversão de extrato.
+  </Card>
+</CardGrid>
+
