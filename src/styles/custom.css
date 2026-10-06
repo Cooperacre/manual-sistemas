@@ -1899,3 +1899,10 @@
     width: 64%;
   }
 }
+
+/* Tabela "Onde está o código": texto à esquerda, com o mesmo recuo em cabeçalho e linhas */
+.tabela-situacao.tabela-repos th:nth-child(n),
+.tabela-situacao.tabela-repos td:nth-child(n) {
+  text-align: left;
+  padding-left: 1.75rem;
+}
