@@ -179,9 +179,15 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Filiais',
+					label: 'Filial IV',
 					items: [
-						{ label: 'Filial IV', slug: 'catalogo/filial-4' },
+						{ label: 'Visão geral', slug: 'catalogo/filial-4' },
+						{ label: 'Webapp: versão Veja', slug: 'catalogo/webapp-filial-iv-veja' },
+						{ label: 'Webapp: hub interno', slug: 'catalogo/webapp-filial-iv-interno' },
+						{ label: 'Planilha de Contrato', slug: 'catalogo/planilha-contrato-filial-iv' },
+						{ label: 'DARB', slug: 'catalogo/darb-filial-iv' },
+						{ label: 'Relação de Despesas', slug: 'catalogo/relacao-despesas-filial-iv' },
+						{ label: 'Manual Operacional', slug: 'catalogo/manual-filial-iv' },
 					],
 				},
 				{

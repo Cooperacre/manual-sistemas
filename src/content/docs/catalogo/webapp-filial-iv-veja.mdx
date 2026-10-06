@@ -1,0 +1,110 @@
+---
+title: "Webapp Filial IV: versão Veja"
+description: "Painel online, instalável no celular, que mostra à Veja e aos parceiros o andamento do contrato: recebimento de borracha, produção de GEB e embarques."
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Em uso" variant="success" size="large" />
+  <Badge text="Acesso pela internet" variant="note" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Painel instalável no celular que mostra à Veja e aos parceiros, a cada carregamento, quanto de borracha chegou, quanto de GEB foi produzido e embarcado e como está a meta do contrato.**
+
+</div>
+
+O **GEB** (granulado escuro de borracha) é a matéria-prima das solas dos tênis da Veja. Esta versão do painel é a que o cliente acompanha.
+
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="information">
+    Os números do contrato (recebimento, produção e embarque) ficam na [Planilha de Contrato](/catalogo/planilha-contrato-filial-iv/), preenchida pela equipe da filial.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    O painel lê a planilha a cada carregamento e mostra o andamento do contrato, sem exportar nem enviar arquivos: o que a equipe registra aparece para o cliente.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Linha do tempo
+
+<div class="tabela-centro tabela-tempo">
+
+| Quando | O que aconteceu |
+|---|---|
+| **17/03/2026** | Início do desenvolvimento, por iniciativa do desenvolvedor |
+| **mai/2026** | Alternância entre as safras 25/26 e 26/27 |
+| **ago/2026** | Auditoria automática dos números contra as planilhas ao vivo |
+| **out/2026** | Em uso, conferido na documentação |
+
+</div>
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Instalável no celular" icon="laptop">
+    Funciona como um aplicativo que se instala direto pelo navegador, sem loja de aplicativos, e guarda o último estado para abrir mesmo sem sinal.
+  </Card>
+  <Card title="Meta do contrato à vista" icon="approve-check-circle">
+    Mostra quanto já foi produzido, quanto falta e, pelo ritmo atual, a data prevista para chegar à meta da safra.
+  </Card>
+  <Card title="Só o que o cliente precisa ver" icon="pencil">
+    A versão Veja oculta informações internas, como a borracha de cultivo, os insumos detalhados e a produção mensal completa.
+  </Card>
+  <Card title="Números conferidos" icon="setting">
+    Existe uma auditoria automática que confere os cálculos contra as planilhas e garante que a versão Veja não mostra dados internos.
+  </Card>
+</CardGrid>
+
+## O que ele faz
+
+- Resumo executivo com o recebido, o GEB produzido e expedido, o saldo e o rendimento
+- Meta do contrato, com percentual concluído e previsão de conclusão pelo ritmo atual
+- Estoque de borracha in natura e de GEB, por tipo
+- Produção, baias, embarques, saídas e qualidade, em abas
+- Alternância entre as safras 25/26 e 26/27, modo claro e escuro e botão para recarregar os dados
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    Iniciativa do desenvolvedor.
+  </Card>
+  <Card title="Quem usa" icon="laptop">
+    **A Veja** e os parceiros do contrato, pela versão externa.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Acompanha o contrato com a Veja. Não depende do sistema de gestão da cooperativa, só da planilha de contrato.
+  </Card>
+</CardGrid>
+
+## Telas do sistema
+
+Tela inicial (aba Geral), no celular:
+
+<div class="cx-print-estreito">
+
+![Webapp Filial IV, versão Veja](../../../assets/filial-4/webapp-veja-geral.png)
+
+</div>
+
+*Os valores são do contrato em andamento e aparecem na tela conforme a planilha.*
+
+## Planilhas relacionadas
+
+[Planilha de Contrato da Filial IV](/catalogo/planilha-contrato-filial-iv/), que alimenta o painel. A versão para a equipe da filial está em [Webapp Filial IV: hub interno](/catalogo/webapp-filial-iv-interno/).
+

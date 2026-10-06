@@ -1,0 +1,99 @@
+---
+title: "Relação de Despesas da Filial IV"
+description: "Planilha do fechamento semanal de despesas da Filial IV, com fornecedores e chave Pix preenchidos automaticamente."
+---
+
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+
+<div class="selos">
+  <Badge text="Em uso" variant="success" size="large" />
+</div>
+
+## Em uma frase
+
+<div class="destaque">
+
+**Planilha do fechamento semanal de despesas da filial: o fornecedor é escolhido numa lista e a chave Pix vem sozinha, e o resumo segue em PDF para o financeiro.**
+
+</div>
+
+
+## Antes e depois
+
+<div class="antes-depois">
+
+<CardGrid>
+  <Card title="Antes" icon="information">
+    As compras da semana se acumulam em cupons e notas, que precisam virar uma relação organizada de valor, fornecedor e chave Pix.
+  </Card>
+  <Card title="Depois" icon="approve-check">
+    Uma tabela de despesas em que o fornecedor é escolhido numa lista e a chave Pix é preenchida automaticamente, com o PDF resumo pronto para enviar com as notas escaneadas.
+  </Card>
+</CardGrid>
+
+</div>
+
+## Linha do tempo
+
+<div class="tabela-centro tabela-tempo">
+
+| Quando | O que aconteceu |
+|---|---|
+| **out/2026** | Em uso, conferido na documentação |
+
+</div>
+
+## Pontos fortes
+
+<CardGrid>
+  <Card title="Fornecedor numa lista" icon="pencil">
+    O campo Recebedor usa uma lista suspensa: ao escolher o fornecedor, a chave Pix é preenchida automaticamente.
+  </Card>
+  <Card title="Cadastro de fornecedores" icon="document">
+    Uma aba própria guarda os fornecedores e as chaves. Para um fornecedor novo, basta acrescentar o nome e a chave.
+  </Card>
+  <Card title="Data automática" icon="setting">
+    A data do fechamento é preenchida pelo nome da aba.
+  </Card>
+  <Card title="PDF para o financeiro" icon="approve-check-circle">
+    O resumo da planilha é juntado às notas escaneadas em um único PDF, na mesma ordem da planilha.
+  </Card>
+</CardGrid>
+
+## O que ele faz
+
+- Reúne as despesas da semana: valor, descrição, observação, recebedor e chave Pix
+- Soma notas do mesmo fornecedor em uma linha e ordena do maior para o menor valor
+- Mantém o cadastro de fornecedores e o total do fechamento
+- Gera o resumo em PDF que segue ao financeiro com os comprovantes
+
+## Quem está por trás
+
+<CardGrid>
+  <Card title="Quem pediu" icon="pencil">
+    Iniciativa do desenvolvedor.
+  </Card>
+  <Card title="Quem usa" icon="laptop">
+    **A equipe da Filial IV**, no fechamento semanal, e **o financeiro**, que recebe o PDF.
+  </Card>
+  <Card title="Quem construiu" icon="rocket">
+    **Lucas Castro**, T.I.
+    <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
+  </Card>
+  <Card title="Até quando" icon="information">
+    Acompanha o procedimento de despesas semanais da filial. Não depende do sistema de gestão da cooperativa.
+  </Card>
+</CardGrid>
+
+## Telas do sistema
+
+Relação de Despesas preenchida:
+
+![Relação de Despesas preenchida](../../../assets/filial-4/relacao-despesas.png)
+
+*Valores e fornecedores de um fechamento anterior.*
+
+## Planilhas relacionadas
+
+O fechamento semanal está descrito no [Manual Operacional](/catalogo/manual-filial-iv/), no procedimento de despesas, e a relação é uma das planilhas de apoio da [Planilha de Contrato](/catalogo/planilha-contrato-filial-iv/).
+
