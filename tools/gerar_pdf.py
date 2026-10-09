@@ -13,6 +13,7 @@ como Anexo A, para o PDF impresso se bastar sem depender de link. Duas saídas e
 import functools
 import http.server
 import re
+import sys
 import shutil
 import subprocess
 import tempfile
@@ -246,7 +247,7 @@ def resolver_referencias(final: pymupdf.Document, pagina_de: dict[str, int], cod
             pg.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
 
 
-def html_folha(mes_ano: str, paginas_anexo: int) -> str:
+def html_folha(mes_ano: str, paginas_anexo: int | None = None) -> str:
     linhas, grupo_atual = [], None
     for grupo, titulo, slug in PAGINAS:
         if not (eh_ficha(slug) or grupo == "Governança"):
@@ -260,7 +261,8 @@ def html_folha(mes_ano: str, paginas_anexo: int) -> str:
             grupo_atual = grupo
         linhas.append(f'<tr><td>{titulo}</td><td class="v">v1.0 · {mes_ano}</td><td class="c"></td></tr>')
     linhas.append('<tr class="g"><td colspan="3">Anexo</td></tr>')
-    linhas.append(f'<tr><td>Anexo A: Manual Operacional da Filial IV ({paginas_anexo} páginas)</td>'
+    nome_anexo = "Anexo A: Manual Operacional da Filial IV" + (f" ({paginas_anexo} páginas)" if paginas_anexo else "")
+    linhas.append(f'<tr><td>{nome_anexo}</td>'
                   f'<td class="v">v1.0 · {mes_ano}</td><td class="c"></td></tr>')
     return f"""<!doctype html><html lang="pt-BR"><meta charset="utf-8"><style>
 @page {{ size: A4; margin: 14mm 18mm }}
@@ -268,26 +270,45 @@ body {{ font-family: 'Segoe UI', Arial, sans-serif; color: #1f2937; margin: 0; f
 h2 {{ color: #14532d; font-size: 18pt; margin: 0 0 2mm }}
 p {{ margin: 0 0 3mm; line-height: 1.45 }}
 table {{ width: 100%; border-collapse: collapse; margin-top: 3mm }}
-td {{ padding: 0.7mm 2mm; border-bottom: 1px solid #e2e8f0 }}
+td {{ padding: 0.45mm 2mm; border-bottom: 1px solid #e2e8f0 }}
 th {{ text-align: left; background: #f1f5f9; padding: 1.5mm 2mm; font-size: 8.5pt; text-transform: uppercase; color: #475569 }}
 tr.g td {{ background: #ecfdf5; color: #15803d; font-weight: 700; font-size: 8.5pt; text-transform: uppercase }}
 td.v {{ width: 34mm; color: #475569 }} td.c {{ width: 40mm; border-bottom: 1px solid #94a3b8 }}
-.ass {{ display: flex; gap: 14mm; margin-top: 9mm; break-inside: avoid }}
+.ass {{ display: flex; gap: 14mm; margin-top: 6mm; break-inside: avoid }}
 .ass div {{ flex: 1; text-align: center; font-size: 9pt }}
 .ass i {{ display: block; border-top: 1px solid #1f2937; margin-bottom: 1.5mm }}
 .ass span {{ color: #475569; font-size: 8pt }}
 .loc {{ margin-top: 5mm; font-size: 9pt }}
 </style>
 <h2>Folha de validação</h2>
-<p>Registra a ciência e a validação das fichas, das páginas de governança e do anexo deste manual, na versão e no mês indicados.
+<p>Registra a ciência e a validação das fichas, das páginas de governança e do anexo do Manual de Sistemas da Cooperacre (Matriz e Filial IV), na versão e no mês indicados.
+O manual é digital e é atualizado conforme os sistemas mudam; esta folha amarra a assinatura à versão de cada ficha listada abaixo.
 Cada ficha é informativa e retrata o sistema como foi conferido nesta edição; ela pode ser atualizada sem alterar esta validação.
 Um sistema novo, ou uma mudança de finalidade, de responsável ou de situação, gera um adendo ou uma nova validação.</p>
 <table><tr><th>Item</th><th>Versão da ficha</th><th>Ciência (rubrica)</th></tr>{''.join(linhas)}</table>
 <p class="loc">Local: ______________________________ &nbsp;&nbsp; Data: ____ / ____ / ________</p>
 <div class="ass"><div><i></i><b>Edinar</b><br><span>Gerente administrativa</span></div>
 <div><i></i><b>Lucas Castro</b><br><span>T.I., responsável técnico</span></div></div>
-<p style="margin-top:6mm;font-size:8pt;color:#64748b">Emitida em duas vias de igual teor: uma para a gestão e uma para o responsável técnico.</p>
+<p style="margin-top:3mm;font-size:8pt;color:#64748b">Emitida em duas vias de igual teor: uma para a gestão e uma para o responsável técnico.</p>
 </html>"""
+
+
+def gerar_folha(destino: Path, mes_ano: str) -> None:
+    """PDF avulso só com a Folha de validação (o que a gestão assina; o manual em si fica digital)."""
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        html = Path(tmp) / "folha.html"
+        html.write_text(html_folha(mes_ano), encoding="utf-8")
+        imprimir(html.as_uri(), destino)
+    doc = pymupdf.open(destino)
+    limpar_parte(doc)
+    doc.set_metadata({"title": "Folha de validação do Manual de Sistemas da Cooperacre",
+                      "author": "Lucas Castro, T.I. da Cooperacre"})
+    out = destino.with_suffix(".tmp.pdf")
+    doc.save(out, garbage=3, deflate=True)
+    n = len(doc)
+    doc.close()
+    out.replace(destino)
+    print(f"OK: {destino} ({n} páginas)")
 
 
 def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
@@ -364,6 +385,9 @@ def main() -> None:
     hoje = date.today()
     mes_ano = f"{MESES[hoje.month - 1][:3]}/{hoje.year}"
     versao = f"Edição 1 · {MESES[hoje.month - 1].capitalize()} de {hoje.year} · versão para leitura e revisão"
+    gerar_folha(SAIDA / "folha-de-validacao.pdf", mes_ano)
+    if "--so-folha" in sys.argv:
+        return
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_anexo:
         construir_anexo(Path(tmp_anexo) / "dist")
         servidores = [servir(DIST, PORTAS["hub"]), servir(Path(tmp_anexo) / "dist", PORTAS["anexo"])]
