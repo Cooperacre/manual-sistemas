@@ -311,6 +311,30 @@ def gerar_folha(destino: Path, mes_ano: str) -> None:
     print(f"OK: {destino} ({n} páginas)")
 
 
+def gerar_protocolos(docs: list[pymupdf.Document], destino: Path) -> None:
+    """PDF só com os protocolos de registro (uma página por sistema), cada um em duas vias, para assinar."""
+    saida = pymupdf.open()
+    toc = []
+    for (grupo, titulo, slug, site), doc in zip(ITENS, docs):
+        if site != "hub":
+            continue
+        for pg in doc:
+            if "Protocolo de registro do sistema" not in pg.get_text():
+                continue
+            for via, rotulo in ((1, "1ª via: gestão"), (2, "2ª via: responsável técnico")):
+                saida.insert_pdf(doc, from_page=pg.number, to_page=pg.number)
+                nova = saida[-1]
+                nova.insert_text((nova.rect.width - 150, nova.rect.height - 22), rotulo, fontsize=8, fontname="helv",
+                                 color=(0.4, 0.45, 0.5))
+                if via == 1:
+                    toc.append([1, f"{titulo}", len(saida)])
+    saida.set_toc(toc)
+    saida.set_metadata({"title": "Protocolos de registro de sistemas da Cooperacre (2 vias)",
+                        "author": "Lucas Castro, T.I. da Cooperacre"})
+    saida.save(destino, garbage=3, deflate=True)
+    print(f"OK: {destino} ({len(saida)} páginas, {len(toc)} protocolos em 2 vias)")
+
+
 def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
     sufixo = "?pdf&sem-protocolo" if modo == "leitura" else "?pdf"
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
@@ -323,6 +347,8 @@ def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
             limpar_parte(doc)
             docs.append(doc)
             print(f"[{modo} {i + 1}/{len(ITENS)}] {titulo}")
+        if modo == "completo":
+            gerar_protocolos(docs, SAIDA / "protocolos-2-vias.pdf")
         contagens = [len(d) for d in docs]
         paginas_anexo = sum(c for c, it in zip(contagens, ITENS) if it[3] == "anexo")
 
@@ -368,7 +394,9 @@ def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
         final.set_toc(toc)
         final.set_metadata({"title": "Manual de Sistemas da Cooperacre (Matriz e Filial IV)",
                             "author": "Lucas Castro, T.I. da Cooperacre"})
-        final.save(destino, garbage=3, deflate=True)
+        # Imagens a 130 dpi (de ~68 MB para ~13 MB): o PDF é baixado pelo site e o texto não é afetado
+        final.rewrite_images(dpi_threshold=170, dpi_target=130, quality=72)
+        final.save(destino, garbage=4, deflate=True)
         print(f"OK: {destino} ({total} páginas)")
 
 
