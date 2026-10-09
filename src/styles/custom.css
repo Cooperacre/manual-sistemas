@@ -688,7 +688,7 @@
   }
 
   /* Rótulo em negrito sozinho numa linha (ex.: "Protocolo e integridade") fica junto da lista que ele apresenta */
-  .sl-markdown-content p:has(> strong:only-child) {
+  .sl-markdown-content p.cx-rotulo {
     break-after: avoid;
   }
 
@@ -742,7 +742,7 @@
 
   /* Impressão compacta: tudo em rem encolhe junto, para a ficha caber em poucas páginas */
   html {
-    font-size: 12px;
+    font-size: 13.5px;
   }
 
   .sl-markdown-content .sl-heading-wrapper,

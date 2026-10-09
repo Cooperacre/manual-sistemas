@@ -80,10 +80,14 @@ export default defineConfig({
 							}
 							// Só no papel: o protocolo fica isolado da ficha, na última página.
 							// A ficha é informativa e pode evoluir; este registro formaliza o sistema.
-							if (conteudo && conteudo.querySelector('.selos') && !document.querySelector('.cx-protocolo')) {
+							if (conteudo && conteudo.querySelector('.selos') && !document.querySelector('.cx-protocolo') && !location.search.includes('sem-protocolo')) {
 								const nome = document.querySelector('h1')?.textContent.trim() || 'Sistema';
 								const escapar = (texto) => String(texto).replace(/[&<>"']/g, (caractere) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[caractere]);
-								const textoDoCard = (titulo) => Array.from(conteudo.querySelectorAll('.card')).find((card) => card.querySelector('.title')?.textContent.trim() === titulo)?.querySelector('.body')?.textContent.trim() || 'A confirmar antes da assinatura.';
+								const textoDoCard = (titulo) => {
+									const card = Array.from(conteudo.querySelectorAll('.card')).find((c) => c.querySelector('.title')?.textContent.trim() === titulo);
+									const partes = card ? Array.from(card.querySelectorAll('.body p')).map((p) => p.textContent.trim()).filter(Boolean) : [];
+									return partes.join('; ') || card?.querySelector('.body')?.textContent.trim() || 'A confirmar antes da assinatura.';
+								};
 								const tituloFinalidade = Array.from(conteudo.querySelectorAll('h2')).find((titulo) => titulo.textContent.trim() === 'Em uma frase');
 								const finalidade = tituloFinalidade?.closest('.sl-heading-wrapper')?.nextElementSibling?.textContent.trim() || 'A confirmar antes da assinatura.';
 								const solicitante = textoDoCard('Quem pediu');
@@ -111,6 +115,11 @@ export default defineConfig({
 									'<p class="cx-protocolo-rodape">Emitido em duas vias de igual teor: uma para a gestão e uma para o responsável técnico.</p>';
 								conteudo.appendChild(protocolo);
 							}
+							// Parágrafo que é só um rótulo em negrito (o CSS não distingue "só o negrito" de "negrito + texto")
+							document.querySelectorAll('.sl-markdown-content p').forEach((p) => {
+								const forte = p.querySelector(':scope > strong');
+								p.classList.toggle('cx-rotulo', !!forte && p.textContent.trim() === forte.textContent.trim());
+							});
 							// Card com pouco texto (ex.: só um nome ou cargo) fica com o corpo
 							// centralizado, em vez de justificado com poucas palavras esparramadas.
 							document.querySelectorAll('.sl-markdown-content .card .body').forEach((body) => {
