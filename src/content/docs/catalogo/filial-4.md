@@ -52,7 +52,7 @@ Descritas dentro do manual da Filial IV.
 Cada solução da filial tem a sua ficha:
 
 - [Webapp Filial IV: versão Veja](/catalogo/webapp-filial-iv-veja/), o painel que o cliente acompanha
-- [Webapp Filial IV: hub interno](/catalogo/webapp-filial-iv-interno/), o painel completo da equipe
+- [Webapp Filial IV: interno](/catalogo/webapp-filial-iv-interno/), o painel completo da equipe
 - [Planilha de Contrato](/catalogo/planilha-contrato-filial-iv/), que registra a operação e alimenta os painéis
 - [DARB](/catalogo/darb-filial-iv/), o formulário do recebimento de borracha
 - [Relação de Despesas](/catalogo/relacao-despesas-filial-iv/), o fechamento semanal

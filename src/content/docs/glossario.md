@@ -31,6 +31,8 @@ description: Termos técnicos usados neste manual, explicados de forma simples.
 
 **Front-end.** A parte do sistema que a pessoa vê e usa: telas, botões, tabelas e gráficos.
 
+**GEB (Granulado Escuro Brasileiro).** Produto beneficiado que a usina da Filial IV gera a partir da borracha in natura. A qualidade de cada lote depende da borracha de origem.
+
 **Hash de integridade.** Um selo que prova que o conteúdo de um documento não foi alterado depois de fechado: se qualquer detalhe mudar, o selo deixa de bater.
 
 **Homologação.** Etapa de testar uma mudança em um ambiente separado, antes de ela chegar aos usuários.

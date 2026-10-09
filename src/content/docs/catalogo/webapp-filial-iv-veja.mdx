@@ -14,7 +14,7 @@ import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
 
 <div class="destaque">
 
-**Painel instalável no celular que mostra à Veja e aos parceiros, a cada carregamento, quanto de borracha chegou, quanto de GEB foi produzido e embarcado e como está a meta do contrato.**
+**Aplicativo instalável no celular que mostra à Veja e aos parceiros, a cada carregamento, quanto de borracha chegou, quanto de GEB foi produzido e embarcado e como está a meta do contrato.**
 
 </div>
 
@@ -27,10 +27,10 @@ O **GEB** (Granulado Escuro Brasileiro) é a matéria-prima das solas dos tênis
 
 <CardGrid>
   <Card title="Antes" icon="information">
-    Os números do contrato (recebimento, produção e embarque) ficam na [Planilha de Contrato](/catalogo/planilha-contrato-filial-iv/), preenchida pela equipe da filial.
+    Era preciso elaborar relatórios semanais com os dados segregados em várias planilhas, para informar o andamento do contrato à Veja.
   </Card>
   <Card title="Depois" icon="approve-check">
-    O painel lê a planilha a cada carregamento e mostra o andamento do contrato, sem exportar nem enviar arquivos: o que a equipe registra aparece para o cliente.
+    Um dashboard em tempo real para a cliente, só com as informações escolhidas, lido direto da [Planilha de Contrato](/catalogo/planilha-contrato-filial-iv/) a cada carregamento. Disponível no celular, como aplicativo instalável, e também pelo navegador no computador.
   </Card>
 </CardGrid>
 
@@ -53,9 +53,9 @@ O **GEB** (Granulado Escuro Brasileiro) é a matéria-prima das solas dos tênis
 
 <CardGrid>
   <Card title="Instalável no celular" icon="laptop">
-    Funciona como um aplicativo que se instala direto pelo navegador, sem loja de aplicativos, e guarda o último estado para abrir mesmo sem sinal.
+    É um aplicativo web: instala-se direto pelo navegador, sem loja de aplicativos, e funciona em Android e em iPhone (iOS) com o mesmo link. Também abre sem internet, mostrando a última posição carregada.
   </Card>
-  <Card title="Meta do contrato à vista" icon="approve-check-circle">
+  <Card title="Meta do Contrato" icon="approve-check-circle">
     Mostra quanto já foi produzido, quanto falta e, pelo ritmo atual, a data prevista para chegar à meta da safra.
   </Card>
   <Card title="Só o que o cliente precisa ver" icon="pencil">
@@ -81,14 +81,14 @@ O **GEB** (Granulado Escuro Brasileiro) é a matéria-prima das solas dos tênis
     Iniciativa do desenvolvedor.
   </Card>
   <Card title="Quem usa" icon="laptop">
-    **A Veja** e os parceiros do contrato, pela versão externa.
+    **VEJA**
   </Card>
   <Card title="Quem construiu" icon="rocket">
     **Lucas Castro**, T.I.
     <span class="cx-subtitulo">Nível técnico: Fullstack Pleno</span>
   </Card>
   <Card title="Até quando" icon="information">
-    Acompanha o contrato com a Veja. Não depende do sistema de gestão da cooperativa, só da planilha de contrato.
+    Acompanha o contrato com a Veja, direto da planilha de contrato. Não depende do ERP, mas pode ser encerrado após o go live do TOTVS, previsto para 01/01/2027.
   </Card>
 </CardGrid>
 
@@ -106,5 +106,6 @@ Tela inicial (aba Geral), no celular:
 
 ## Planilhas relacionadas
 
-[Planilha de Contrato da Filial IV](/catalogo/planilha-contrato-filial-iv/), que alimenta o painel. A versão para a equipe da filial está em [Webapp Filial IV: hub interno](/catalogo/webapp-filial-iv-interno/).
+- [Planilha de Contrato da Filial IV](/catalogo/planilha-contrato-filial-iv/), que alimenta o painel
+- A versão para a equipe da filial está em [Webapp Filial IV: interno](/catalogo/webapp-filial-iv-interno/)
 

@@ -28,7 +28,7 @@ Visão rápida para auditar o que está em cada estágio. Cada item leva à sua 
 | [Conversor de Extrato SICOOB](/automacoes/pdftoexcel/) | Automação | Contábil |
 | [Gerador de Cards](/automacoes/gerador-cards/) | Automação | Recepção |
 | [Webapp Filial IV: versão Veja](/catalogo/webapp-filial-iv-veja/) | Sistema | Filial IV e Veja |
-| [Webapp Filial IV: hub interno](/catalogo/webapp-filial-iv-interno/) | Sistema | Filial IV |
+| [Webapp Filial IV: interno](/catalogo/webapp-filial-iv-interno/) | Sistema | Filial IV |
 | [Planilha de Contrato da Filial IV](/catalogo/planilha-contrato-filial-iv/) | Planilha | Filial IV |
 | [DARB](/catalogo/darb-filial-iv/) | Planilha | Filial IV |
 | [Relação de Despesas da Filial IV](/catalogo/relacao-despesas-filial-iv/) | Planilha | Filial IV |

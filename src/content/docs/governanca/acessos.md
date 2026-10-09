@@ -11,10 +11,12 @@ description: Níveis de acesso e papéis de responsabilidade por sistema.
 |---|---|---|
 | **1. Usuário** | Opera o sistema no dia a dia. | Usar o sistema. |
 | **2. Administrador funcional** | Administra o uso do sistema. | Gerenciar usuários e cadastros. |
-| **3. Manutenção técnica** | Desenvolve e mantém. | Alterar código e configurações, em ambiente de teste (geralmente a máquina de quem desenvolve) quando aplicável. |
-| **4. Administração de produção** | Responde pelo ambiente real. | Publicar mudanças e cuidar do servidor, das credenciais e dos backups. |
+| **3. Manutenção técnica** | Desenvolve e corrige o sistema. | Alterar código e configurações num ambiente de teste (geralmente a máquina de quem desenvolve), separado do sistema em uso real. |
+| **4. Administração de produção** | Publica e sustenta o sistema em uso real. | Publicar as mudanças já prontas, e cuidar do servidor, das credenciais e dos backups. |
 
 </div>
+
+A separação entre os níveis 3 e 4 marca o que cada ambiente permite: alterar código em teste é diferente de publicar no ambiente real. Isso não exige pessoas diferentes: as duas etapas podem ficar com o mesmo responsável técnico ou com pessoas distintas, conforme o tamanho da equipe.
 
 Ninguém **recebe todos os níveis** só por usar um sistema: cada pessoa tem o nível que o trabalho exige.
 

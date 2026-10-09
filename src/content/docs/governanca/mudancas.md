@@ -10,7 +10,7 @@ Toda mudança em um sistema segue o mesmo caminho curto. Para a cooperativa, iss
 1. **Pedido.** A necessidade é registrada: o que mudar e por quê.
 2. **Cópia de trabalho.** A alteração é feita numa cópia separada do sistema, nunca direto na versão que está em uso.
 3. **Teste.** A mudança é testada, inclusive no que ela pode afetar.
-4. **Revisão.** Antes de entrar na versão oficial, a mudança é revisada pelo responsável técnico, ou por uma segunda pessoa quando houver (no jargão técnico, um *Pull Request*).
+4. **Revisão.** Antes de entrar na versão oficial, a mudança é revisada pelo responsável técnico, ou por uma segunda pessoa quando houver. O pedido formal dessa revisão é, no jargão técnico, um *Pull Request*.
 5. **Registro.** A nova versão recebe um número e uma linha no histórico de mudanças.
 6. **Publicação.** A nova versão passa a ser usada.
 

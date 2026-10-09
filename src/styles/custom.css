@@ -35,19 +35,28 @@
   text-align: justify;
 }
 
-/* Blocos especiais mantêm alinhamento próprio, sem recuo de parágrafo. */
-.sl-markdown-content li p,
+/* Itens de lista seguem o mesmo justify dos parágrafos. */
+.sl-markdown-content li {
+  text-align: justify;
+}
+
+.sl-markdown-content li p {
+  text-indent: 0;
+  text-align: justify;
+}
+
+/* Blocos especiais: sem recuo de parágrafo, mas seguem o mesmo justify do texto corrido. */
 .sl-markdown-content aside p,
 .sl-markdown-content details p,
 .sl-markdown-content table p {
   text-indent: 0;
-  text-align: left;
+  text-align: justify;
 }
 
-/* Glossário: parágrafos curtos, com alinhamento simples para leitura rápida. */
+/* Glossário: parágrafos curtos, sem recuo, justificados como o resto do texto corrido. */
 .sl-markdown-content .glossario p {
   text-indent: 0;
-  text-align: left;
+  text-align: justify;
 }
 
 /* Sem indent no parágrafo que só tem imagem, nem na legenda de uma linha logo antes */
@@ -162,9 +171,13 @@
   margin-inline: auto;
 }
 
-.tabela-centro td,
 .tabela-centro th {
   text-align: center;
+  vertical-align: middle;
+}
+
+.tabela-centro td {
+  text-align: justify;
   vertical-align: middle;
 }
 
@@ -185,9 +198,8 @@
   padding-inline: 1.25rem;
 }
 
-.tabela-centro.tabela-tempo th:nth-child(2),
 .tabela-centro.tabela-tempo td:nth-child(2) {
-  text-align: left;
+  text-align: justify;
 }
 
 
@@ -236,7 +248,7 @@
   text-align: center;
 }
 
-.tabela-padrao td:last-child {
+.sl-markdown-content .tabela-padrao table td:last-child {
   text-align: justify;
 }
 
@@ -499,7 +511,7 @@
   font-size: 0.875rem;
   color: var(--sl-color-gray-2);
   line-height: 1.4;
-  text-align: left !important;
+  text-align: justify !important;
   text-indent: 0 !important;
 }
 
@@ -724,8 +736,18 @@
 
   /* Prints menores no papel: cabem dois por página em vez de deixar um vão em branco */
   .sl-markdown-content img {
-    max-height: 11cm;
+    max-height: 7.5cm;
     object-fit: contain;
+  }
+
+  /* Impressão compacta: tudo em rem encolhe junto, para a ficha caber em poucas páginas */
+  html {
+    font-size: 12px;
+  }
+
+  .sl-markdown-content .sl-heading-wrapper,
+  .sl-markdown-content > * + * {
+    margin-top: 0.8rem;
   }
 
   @page {
@@ -1119,7 +1141,7 @@
   font-weight: 400;
   font-size: 0.9rem;
   line-height: 1.5;
-  text-align: left;
+  text-align: justify;
 }
 
 .cx-destaque-selo {
@@ -1462,8 +1484,12 @@
   width: 70%;
 }
 
-.tabela-modelo td {
+.tabela-modelo td:nth-child(1) {
   text-align: left;
+}
+
+.tabela-modelo td:nth-child(2) {
+  text-align: justify;
 }
 
 .sl-markdown-content .tabela-modelo table th {
