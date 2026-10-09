@@ -217,9 +217,15 @@ def limpar_parte(doc: pymupdf.Document) -> None:
         if not util and not pg.get_images() and not pg.get_drawings():
             doc.delete_page(n)
     for pg in doc:
-        for b in pg.get_text("blocks"):
-            if b[1] < 40 and re.match(r"P.gina \d+ de \d+", b[4].strip()):
-                pg.draw_rect(pymupdf.Rect(b[0] - 2, b[1] - 2, b[2] + 2, b[3] + 2), color=None, fill=(1, 1, 1))
+        achou = False
+        for bloco in pg.get_text("dict")["blocks"]:
+            for linha in bloco.get("lines", []):
+                texto = "".join(s["text"] for s in linha["spans"]).strip()
+                if linha["bbox"][1] < 45 and re.fullmatch(r"P.gina \d+ de \d+", texto):
+                    pg.add_redact_annot(pymupdf.Rect(linha["bbox"]) + (-2, -2, 2, 2), fill=False)
+                    achou = True
+        if achou:
+            pg.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
 
 
 def resolver_referencias(final: pymupdf.Document, pagina_de: dict[str, int], codigos: dict[str, str]) -> None:
