@@ -657,8 +657,8 @@
   }
 
   .sl-markdown-content img {
-    max-width: 100% !important;
-    width: auto;
+    max-width: 90% !important;
+    width: 90%;
   }
 
   .sl-markdown-content .card,
@@ -734,9 +734,9 @@
     break-inside: avoid;
   }
 
-  /* Prints menores no papel: cabem dois por página em vez de deixar um vão em branco */
+  /* Prints no papel: 90% da largura (telas 16:9 cabem duas por página) */
   .sl-markdown-content img {
-    max-height: 7.5cm;
+    max-height: 12cm;
     object-fit: contain;
   }
 
@@ -1614,7 +1614,7 @@
     page-break-before: always;
     break-inside: avoid;
     margin: 0;
-    padding: 8mm 4mm 0;
+    padding: 0 4mm;
     color: #1e293b;
   }
 
@@ -1643,7 +1643,7 @@
   .cx-protocolo-intro {
     color: #475569;
     font-size: 10.5pt;
-    margin: 4mm 0 7mm !important;
+    margin: 3mm 0 5mm !important;
     text-indent: 0 !important;
   }
 
@@ -1656,7 +1656,7 @@
   .cx-protocolo-tabela th,
   .cx-protocolo-tabela td {
     border: 1px solid #cbd5e1;
-    padding: 3.5mm 4mm;
+    padding: 2.8mm 4mm;
     text-align: left;
     vertical-align: top;
   }
@@ -1682,8 +1682,8 @@
     border-left: 4px solid #2563eb;
     font-size: 10.5pt;
     line-height: 1.55;
-    margin: 7mm 0 9mm !important;
-    padding: 4mm 5mm;
+    margin: 5mm 0 6mm !important;
+    padding: 3mm 5mm;
     text-align: left;
     text-indent: 0 !important;
   }
@@ -1693,7 +1693,7 @@
     display: flex;
     font-size: 10pt;
     gap: 2mm;
-    margin: 0 0 15mm;
+    margin: 0 0 11mm;
     text-indent: 0 !important;
   }
 
@@ -1755,7 +1755,7 @@
     border-top: 1px solid #cbd5e1;
     color: #64748b;
     font-size: 8.5pt;
-    margin: 12mm 0 0 !important;
+    margin: 8mm 0 0 !important;
     padding-top: 3mm;
     text-align: center;
     text-indent: 0 !important;
@@ -1914,24 +1914,59 @@
 }
 
 /* Tabela "Onde está o código": duas colunas, o endereço do repositório pede mais largura que o nome do item */
-@media screen and (min-width: 768px) {
+@media print, screen and (min-width: 768px) {
   .tabela-situacao.tabela-repos th:nth-child(1),
   .tabela-situacao.tabela-repos td:nth-child(1) {
-    width: 36%;
+    width: 30%;
   }
 
   .tabela-situacao.tabela-repos th:nth-child(2),
   .tabela-situacao.tabela-repos td:nth-child(2) {
-    width: 64%;
+    width: 70%;
   }
 }
 
 /* Tabela "Onde está o código": linhas à esquerda, com recuo, e cabeçalho centralizado */
 .tabela-situacao.tabela-repos td:nth-child(n) {
   text-align: left;
-  padding-left: 1.75rem;
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+}
+
+/* O endereço do repositório cabe numa linha só (sem quebrar no hífen nem cortar na borda) */
+.tabela-situacao.tabela-repos td:nth-child(2),
+.tabela-situacao.tabela-repos td:nth-child(2) a {
+  white-space: nowrap;
+  font-size: 0.92em;
 }
 
 .tabela-situacao.tabela-repos th:nth-child(n) {
   text-align: center;
+}
+
+/* Tabelas no papel: contorno definido, cabeçalho cinza, primeira coluna das fichas em cinza claro e
+   linhas alternadas, para dar contraste (a tabela do protocolo tem estilo próprio) */
+@media print {
+  .sl-markdown-content table:not(.cx-protocolo-tabela) {
+    border-collapse: collapse !important;
+    border: 1.5px solid #475569 !important;
+  }
+
+  .sl-markdown-content table:not(.cx-protocolo-tabela) th,
+  .sl-markdown-content table:not(.cx-protocolo-tabela) td {
+    border: 1px solid #94a3b8 !important;
+  }
+
+  .sl-markdown-content table:not(.cx-protocolo-tabela) th {
+    background: #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+
+  .sl-markdown-content table:not(.cx-protocolo-tabela) tbody tr:nth-child(even) td {
+    background: #f1f5f9 !important;
+  }
+
+  .sl-markdown-content .tabela-padrao table td:first-child {
+    background: #e2e8f0 !important;
+  }
 }

@@ -97,21 +97,29 @@ ANEXO = [
 ]
 
 # (grupo, título, slug, site): tudo que entra no PDF, na ordem
-ITENS = [(g, t, s, "hub") for g, t, s in PAGINAS] + [(GRUPO_ANEXO, t, s, "anexo") for t, s in ANEXO]
+# O anexo entra logo depois da ficha "Manual Operacional" (Filial IV), antes da governança
+_fim_filial = next(i for i, p in enumerate(PAGINAS) if p[2] == "catalogo/manual-filial-iv") + 1
+ITENS = ([(g, t, s, "hub") for g, t, s in PAGINAS[:_fim_filial]]
+         + [(GRUPO_ANEXO, t, s, "anexo") for t, s in ANEXO]
+         + [(g, t, s, "hub") for g, t, s in PAGINAS[_fim_filial:]])
 
 # Impressão do anexo: o CSS dele só mostra o checklist; aqui entra o padrão do hub (10 pt, sem menus)
 CSS_ANEXO = """<style>@media print {
   body * { visibility: visible !important; }
-  .print-checklist { display: none !important; }
+  .print-checklist, .btn-print { display: none !important; }
   header.header, .sidebar, .right-sidebar, mobile-starlight-toc, starlight-menu-button, footer,
   .pagination-links { display: none !important; }
   :root { --sl-content-width: 100%; --sl-sidebar-width: 0px; --sl-nav-height: 0px; }
   .main-frame, .main-pane, .content-panel { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   html { font-size: 13.5px; }
-  .sl-markdown-content img { max-width: 100% !important; max-height: 7.5cm; object-fit: contain; break-inside: avoid; }
-  .sl-markdown-content h2, .sl-markdown-content h3, .sl-markdown-content h4 { break-after: avoid; }
+  .sl-markdown-content img { width: 90%; max-width: 90% !important; max-height: 12cm; object-fit: contain; break-inside: avoid; }
+  .sl-markdown-content .sl-heading-wrapper, .sl-markdown-content h2, .sl-markdown-content h3, .sl-markdown-content h4 { break-after: avoid; break-inside: avoid; }
   .sl-markdown-content table, .sl-markdown-content tr, .sl-markdown-content .starlight-aside { break-inside: avoid; }
+  .sl-markdown-content table { border-collapse: collapse !important; border: 1.5px solid #475569 !important; }
+  .sl-markdown-content table th, .sl-markdown-content table td { border: 1px solid #94a3b8 !important; }
+  .sl-markdown-content table th { background: #cbd5e1 !important; color: #0f172a !important; }
+  .sl-markdown-content table tbody tr:nth-child(even) td { background: #f1f5f9 !important; }
   @page { size: A4; margin: 2cm 1.5cm 1.5cm;
     @top-left { content: "Cooperacre · Manual Operacional da Filial IV"; font-family: "Segoe UI", sans-serif; font-size: 9pt; color: #475569; } }
 }</style>"""
@@ -160,7 +168,9 @@ def construir_anexo(destino: Path) -> None:
                    check=True, capture_output=True, timeout=600)
     for html in destino.rglob("index.html"):
         txt = html.read_text(encoding="utf-8")
-        html.write_text(txt.replace("</head>", CSS_ANEXO + JS_REF + "</head>", 1), encoding="utf-8")
+        # O último "</head>" é o real: o script printChecklist do manual da Filial IV tem a mesma string dentro de um texto
+        i = txt.rfind("</head>")
+        html.write_text(txt[:i] + CSS_ANEXO + JS_REF + txt[i:], encoding="utf-8")
 
 
 def html_capa_sumario(inicios: list[int], versao: str, pag_folha: int | None = None) -> str:
@@ -231,7 +241,7 @@ def resolver_referencias(final: pymupdf.Document, pagina_de: dict[str, int], cod
             texto = f"(p. {alvo})" if alvo else ""
             for r in pg.search_for(f"(p. {cod})"):
                 pg.add_redact_annot(r, text=texto, fontname="helv", fontsize=9, text_color=(0.2, 0.25, 0.3),
-                                    fill=(1, 1, 1), align=pymupdf.TEXT_ALIGN_LEFT)
+                                    fill=False, align=pymupdf.TEXT_ALIGN_LEFT)
         if achados:
             pg.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
 
