@@ -10,7 +10,6 @@ description: "Documentação da Filial IV, com apontamento para o manual operaci
 | Campo | Informação |
 |---|---|
 | **Nome de exibição** | Filial IV |
-| **Pasta / repositório** | `cooperacre4-manual` |
 | **Finalidade** | Reunir o que a Filial IV tem documentado: o manual operacional já descreve as rotinas, a planilha de contrato e o webapp da filial (instalável no celular como aplicativo ou acessível pelo navegador). |
 | **Quem solicitou** | Iniciativa do desenvolvedor (Lucas Castro) |
 | **Quem usa** | Funcionários da Filial IV |
@@ -26,7 +25,7 @@ Manual da Filial IV: [cooperacre4-manual.netlify.app](https://cooperacre4-manual
 
 ## Para que serve
 
-A documentação da Filial IV vive no manual da própria filial: um projeto isolado, com site e publicação próprios. Este catálogo apenas aponta para ela, para não duplicar informação.
+A Filial IV tem seis soluções, cada uma com a sua ficha (lista no fim desta página). O passo a passo das rotinas fica no manual da própria filial, um projeto isolado, com site e publicação próprios; as fichas trazem o essencial e remetem a ele para o detalhe operacional.
 
 O manual nasceu de iniciativa própria, com um objetivo direto: permitir que qualquer pessoa executasse as tarefas operacionais da filial, inclusive na ausência de quem normalmente as faz, e facilitar o treinamento de quem assumisse a operação depois.
 

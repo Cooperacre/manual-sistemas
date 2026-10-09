@@ -688,7 +688,7 @@
   }
 
   /* Rótulo em negrito sozinho numa linha (ex.: "Protocolo e integridade") fica junto da lista que ele apresenta */
-  .sl-markdown-content p.cx-rotulo {
+  .sl-markdown-content p.cx-so-negrito {
     break-after: avoid;
   }
 

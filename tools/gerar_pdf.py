@@ -1,29 +1,34 @@
-"""Gera o PDF único do manual (capa, sumário, fichas na ordem do menu e governança).
+"""Gera o PDF único do manual (capa, sumário, fichas na ordem do menu, governança e anexo).
 
 Uso (na raiz do projeto, com `npm run build` já feito e o dev server fechado):
     python tools/gerar_pdf.py
 
-Cada página do `dist/` vira um PDF pelo Edge sem janela; depois o PyMuPDF junta tudo
-e cria os marcadores. Duas saídas em pdf/:
+Cada página do `dist/` vira um PDF pelo Edge sem janela; depois o PyMuPDF junta tudo,
+troca os links internos por "(p. N)" clicável e cria os marcadores. O Manual Operacional da
+Filial IV (outra pasta, `ANEXO_REPO`) é construído num diretório temporário e entra inteiro
+como Anexo A, para o PDF impresso se bastar sem depender de link. Duas saídas em pdf/:
   manual-sistemas-matriz.pdf   fichas com o protocolo de assinatura ao fim de cada uma
   manual-sistemas-leitura.pdf  fichas sem protocolo e, no fim, uma Folha de validação única
 """
 import functools
 import http.server
 import re
+import shutil
 import subprocess
 import tempfile
 import threading
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 import pymupdf
 
 RAIZ = Path(__file__).resolve().parent.parent
 DIST = RAIZ / "dist"
 SAIDA = RAIZ / "pdf"
+ANEXO_REPO = RAIZ.parent / "cooperacre4-manual"
 EDGE = r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-PORTA = 4399
+PORTAS = {"hub": 4399, "anexo": 4398}
 MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
          "agosto", "setembro", "outubro", "novembro", "dezembro"]
 
@@ -69,6 +74,76 @@ PAGINAS = [
     ("Governança", "Credenciais e backup", "governanca/credenciais-e-backup"),
 ]
 
+# Anexo A: menu lateral do manual da Filial IV (cooperacre4-manual/astro.config.mjs)
+GRUPO_ANEXO = "Anexo A: Manual Operacional da Filial IV"
+ANEXO = [
+    ("O que é este manual", "intro"),
+    ("Glossário", "glossario"),
+    ("Rotina Diária", "rotinas/rotina-diaria"),
+    ("Rotina de Sexta-Feira", "rotinas/sexta-feira"),
+    ("Recebimento de Borracha", "procedimentos/recebimento-borracha"),
+    ("Embarque de GEB", "procedimentos/embarque"),
+    ("Despesas Semanais", "procedimentos/despesas"),
+    ("Compra de Lenha", "procedimentos/compra-lenha"),
+    ("Entrega de EPIs", "procedimentos/entrega-epis"),
+    ("Solicitação de Serviços", "procedimentos/solicitacao-servicos"),
+    ("Relatório Quinzenal RH", "procedimentos/relatorio-rh"),
+    ("DARB", "procedimentos/darb"),
+    ("Protocolo de Correspondência", "procedimentos/protocolo-correspondencia"),
+    ("Planilha de Contrato: visão geral", "planilha/visao-geral"),
+    ("Planilha de Contrato: detalhamento das abas", "planilha/abas"),
+    ("Webapp: visão geral", "webapp/visao-geral"),
+    ("Webapp: seções do app", "webapp/secoes"),
+]
+
+# (grupo, título, slug, site): tudo que entra no PDF, na ordem
+ITENS = [(g, t, s, "hub") for g, t, s in PAGINAS] + [(GRUPO_ANEXO, t, s, "anexo") for t, s in ANEXO]
+
+# Impressão do anexo: o CSS dele só mostra o checklist; aqui entra o padrão do hub (10 pt, sem menus)
+CSS_ANEXO = """<style>@media print {
+  body * { visibility: visible !important; }
+  .print-checklist { display: none !important; }
+  header.header, .sidebar, .right-sidebar, mobile-starlight-toc, starlight-menu-button, footer,
+  .pagination-links { display: none !important; }
+  :root { --sl-content-width: 100%; --sl-sidebar-width: 0px; --sl-nav-height: 0px; }
+  .main-frame, .main-pane, .content-panel { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { font-size: 13.5px; }
+  .sl-markdown-content img { max-width: 100% !important; max-height: 7.5cm; object-fit: contain; break-inside: avoid; }
+  .sl-markdown-content h2, .sl-markdown-content h3, .sl-markdown-content h4 { break-after: avoid; }
+  .sl-markdown-content table, .sl-markdown-content tr, .sl-markdown-content .starlight-aside { break-inside: avoid; }
+  @page { size: A4; margin: 2cm 1.5cm 1.5cm;
+    @top-left { content: "Cooperacre · Manual Operacional da Filial IV"; font-family: "Segoe UI", sans-serif; font-size: 9pt; color: #475569; } }
+}</style>"""
+
+# Referência de página: cada link interno ganha "(p. XXX)", onde XXX é um código derivado do destino
+# (mesmo cálculo no hub, em astro.config.mjs). Depois da montagem, o código vira o número da página.
+JS_REF = """<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cod = (k) => { let h = 0; for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 456976;
+    return String.fromCharCode(65 + h % 26, 65 + Math.floor(h / 26) % 26, 65 + Math.floor(h / 676) % 26, 65 + Math.floor(h / 17576) % 26); };
+  document.querySelectorAll('.sl-markdown-content a[href]').forEach((a) => {
+    const h = a.getAttribute('href');
+    if (!h.startsWith('/') || h.startsWith('//')) return;
+    const chave = 'A:' + h.split('#')[0].split('?')[0].replace(/^\\/|\\/$/g, '');
+    const s = document.createElement('span');
+    s.textContent = ' (p. ' + cod(chave) + ')';
+    a.after(s);
+  });
+});
+</script>"""
+
+
+def codigo(chave: str) -> str:
+    h = 0
+    for c in chave:
+        h = (h * 31 + ord(c)) % 456976
+    return chr(65 + h % 26) + chr(65 + (h // 26) % 26) + chr(65 + (h // 676) % 26) + chr(65 + (h // 17576) % 26)
+
+
+def chave_de(site: str, slug: str) -> str:
+    return ("A:" if site == "anexo" else "") + slug.strip("/")
+
 
 def imprimir(url: str, destino: Path) -> None:
     subprocess.run(
@@ -78,9 +153,19 @@ def imprimir(url: str, destino: Path) -> None:
     )
 
 
+def construir_anexo(destino: Path) -> None:
+    """Constrói o manual da Filial IV fora do repositório dele e prepara as páginas para o papel."""
+    npx = shutil.which("npx") or "npx.cmd"
+    subprocess.run([npx, "astro", "build", "--outDir", str(destino)], cwd=ANEXO_REPO,
+                   check=True, capture_output=True, timeout=600)
+    for html in destino.rglob("index.html"):
+        txt = html.read_text(encoding="utf-8")
+        html.write_text(txt.replace("</head>", CSS_ANEXO + JS_REF + "</head>", 1), encoding="utf-8")
+
+
 def html_capa_sumario(inicios: list[int], versao: str, pag_folha: int | None = None) -> str:
     linhas, grupo_atual = [], None
-    for (grupo, titulo, _), pag in zip(PAGINAS, inicios):
+    for (grupo, titulo, _, _), pag in zip(ITENS, inicios):
         if grupo != grupo_atual:
             linhas.append(f'<h3>{grupo}</h3>')
             grupo_atual = grupo
@@ -126,7 +211,32 @@ def limpar_parte(doc: pymupdf.Document) -> None:
                 pg.draw_rect(pymupdf.Rect(b[0] - 2, b[1] - 2, b[2] + 2, b[3] + 2), color=None, fill=(1, 1, 1))
 
 
-def html_folha(mes_ano: str) -> str:
+def resolver_referencias(final: pymupdf.Document, pagina_de: dict[str, int], codigos: dict[str, str]) -> None:
+    """Troca "(p. XXX)" pelo número da página, liga o link ao destino e apaga o que não tem destino."""
+    for pg in final:
+        for l in pg.get_links():
+            uri = l.get("uri", "")
+            u = urlparse(uri)
+            if u.hostname != "127.0.0.1":
+                continue
+            site = "anexo" if u.port == PORTAS["anexo"] else "hub"
+            chave = chave_de(site, u.path)
+            pg.delete_link(l)
+            if chave in pagina_de:
+                pg.insert_link({"kind": pymupdf.LINK_GOTO, "from": l["from"], "page": pagina_de[chave] - 1,
+                                "to": pymupdf.Point(0, 0)})
+        achados = set(re.findall(r"\(p\. ([A-Z]{4})\)", pg.get_text()))
+        for cod in achados:
+            alvo = pagina_de.get(codigos.get(cod, ""))
+            texto = f"(p. {alvo})" if alvo else ""
+            for r in pg.search_for(f"(p. {cod})"):
+                pg.add_redact_annot(r, text=texto, fontname="helv", fontsize=9, text_color=(0.2, 0.25, 0.3),
+                                    fill=(1, 1, 1), align=pymupdf.TEXT_ALIGN_LEFT)
+        if achados:
+            pg.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE, graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
+
+
+def html_folha(mes_ano: str, paginas_anexo: int) -> str:
     linhas, grupo_atual = [], None
     for grupo, titulo, slug in PAGINAS:
         if not (eh_ficha(slug) or grupo == "Governança"):
@@ -139,6 +249,9 @@ def html_folha(mes_ano: str) -> str:
             linhas.append(f'<tr class="g"><td colspan="3">{grupo}</td></tr>')
             grupo_atual = grupo
         linhas.append(f'<tr><td>{titulo}</td><td class="v">v1.0 · {mes_ano}</td><td class="c"></td></tr>')
+    linhas.append('<tr class="g"><td colspan="3">Anexo</td></tr>')
+    linhas.append(f'<tr><td>Anexo A: Manual Operacional da Filial IV ({paginas_anexo} páginas)</td>'
+                  f'<td class="v">v1.0 · {mes_ano}</td><td class="c"></td></tr>')
     return f"""<!doctype html><html lang="pt-BR"><meta charset="utf-8"><style>
 @page {{ size: A4; margin: 14mm 18mm }}
 body {{ font-family: 'Segoe UI', Arial, sans-serif; color: #1f2937; margin: 0; font-size: 9.5pt }}
@@ -153,14 +266,14 @@ td.v {{ width: 34mm; color: #475569 }} td.c {{ width: 40mm; border-bottom: 1px s
 .ass div {{ flex: 1; text-align: center; font-size: 9pt }}
 .ass i {{ display: block; border-top: 1px solid #1f2937; margin-bottom: 1.5mm }}
 .ass span {{ color: #475569; font-size: 8pt }}
-.loc {{ margin-top: 8mm; font-size: 9pt }}
+.loc {{ margin-top: 5mm; font-size: 9pt }}
 </style>
 <h2>Folha de validação</h2>
-<p>Registra a ciência e a validação das fichas e das páginas de governança deste manual, na versão e no mês indicados.
+<p>Registra a ciência e a validação das fichas, das páginas de governança e do anexo deste manual, na versão e no mês indicados.
 Cada ficha é informativa e retrata o sistema como foi conferido nesta edição; ela pode ser atualizada sem alterar esta validação.
 Um sistema novo, ou uma mudança de finalidade, de responsável ou de situação, gera um adendo ou uma nova validação.</p>
 <table><tr><th>Item</th><th>Versão da ficha</th><th>Ciência (rubrica)</th></tr>{''.join(linhas)}</table>
-<p class="loc" style="margin-top:5mm">Local: ______________________________ &nbsp;&nbsp; Data: ____ / ____ / ________</p>
+<p class="loc">Local: ______________________________ &nbsp;&nbsp; Data: ____ / ____ / ________</p>
 <div class="ass"><div><i></i><b>Edinar</b><br><span>Gerente administrativa</span></div>
 <div><i></i><b>Lucas Castro</b><br><span>T.I., responsável técnico</span></div></div>
 <p style="margin-top:6mm;font-size:8pt;color:#64748b">Emitida em duas vias de igual teor: uma para a gestão e uma para o responsável técnico.</p>
@@ -168,18 +281,19 @@ Um sistema novo, ou uma mudança de finalidade, de responsável ou de situação
 
 
 def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
-    sufixo = "?sem-protocolo" if modo == "leitura" else ""
+    sufixo = "?pdf&sem-protocolo" if modo == "leitura" else "?pdf"
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         tmp = Path(tmp)
         docs = []
-        for i, (_, titulo, slug) in enumerate(PAGINAS):
+        for i, (_, titulo, slug, site) in enumerate(ITENS):
             alvo = tmp / f"{i:02d}.pdf"
-            imprimir(f"http://127.0.0.1:{PORTA}/{slug}/{sufixo}", alvo)
+            imprimir(f"http://127.0.0.1:{PORTAS[site]}/{slug}/{sufixo}", alvo)
             doc = pymupdf.open(alvo)
             limpar_parte(doc)
             docs.append(doc)
-            print(f"[{modo} {i + 1}/{len(PAGINAS)}] {titulo}")
+            print(f"[{modo} {i + 1}/{len(ITENS)}] {titulo}")
         contagens = [len(d) for d in docs]
+        paginas_anexo = sum(c for c, it in zip(contagens, ITENS) if it[3] == "anexo")
 
         n_frente = 2
         for _ in range(3):
@@ -197,17 +311,23 @@ def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
             n_frente = n_real
 
         final = pymupdf.open(frente)
-        toc = []
-        for (grupo, titulo, _), doc, ini in zip(PAGINAS, docs, inicios):
+        toc, pagina_de = [], {}
+        for (grupo, titulo, slug, site), doc, ini in zip(ITENS, docs, inicios):
             final.insert_pdf(doc)
-            toc.append([1, f"{grupo}: {titulo}", ini])
+            toc.append([1, f"{grupo}: {titulo}" if site == "hub" else f"Anexo A: {titulo}", ini])
+            pagina_de[chave_de(site, slug)] = ini
         if modo == "leitura":
             html = tmp / "folha.html"
-            html.write_text(html_folha(mes_ano), encoding="utf-8")
+            html.write_text(html_folha(mes_ano, paginas_anexo), encoding="utf-8")
             folha = tmp / "folha.pdf"
             imprimir(html.as_uri(), folha)
             toc.append([1, "Folha de validação", len(final) + 1])
             final.insert_pdf(pymupdf.open(folha))
+
+        codigos = {codigo(k): k for k in pagina_de}
+        # outros destinos (ex.: modelo de ficha) caem em códigos sem página e a referência é apagada
+        assert len(codigos) == len(pagina_de), "colisão de códigos de página"
+        resolver_referencias(final, pagina_de, codigos)
 
         total = len(final)
         for n in range(1, total):
@@ -221,19 +341,26 @@ def gerar(modo: str, destino: Path, mes_ano: str, versao: str) -> None:
         print(f"OK: {destino} ({total} páginas)")
 
 
+def servir(pasta: Path, porta: int) -> http.server.ThreadingHTTPServer:
+    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(pasta))
+    handler.log_message = lambda *a, **k: None
+    servidor = http.server.ThreadingHTTPServer(("127.0.0.1", porta), handler)
+    threading.Thread(target=servidor.serve_forever, daemon=True).start()
+    return servidor
+
+
 def main() -> None:
     SAIDA.mkdir(exist_ok=True)
-    handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(DIST))
-    handler.log_message = lambda *a, **k: None
-    servidor = http.server.ThreadingHTTPServer(("127.0.0.1", PORTA), handler)
-    threading.Thread(target=servidor.serve_forever, daemon=True).start()
-
     hoje = date.today()
     mes_ano = f"{MESES[hoje.month - 1][:3]}/{hoje.year}"
     versao = f"Edição 1 · {MESES[hoje.month - 1].capitalize()} de {hoje.year} · versão para leitura e revisão"
-    gerar("completo", SAIDA / "manual-sistemas-matriz.pdf", mes_ano, versao)
-    gerar("leitura", SAIDA / "manual-sistemas-leitura.pdf", mes_ano, versao)
-    servidor.shutdown()
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_anexo:
+        construir_anexo(Path(tmp_anexo) / "dist")
+        servidores = [servir(DIST, PORTAS["hub"]), servir(Path(tmp_anexo) / "dist", PORTAS["anexo"])]
+        gerar("completo", SAIDA / "manual-sistemas-matriz.pdf", mes_ano, versao)
+        gerar("leitura", SAIDA / "manual-sistemas-leitura.pdf", mes_ano, versao)
+        for s in servidores:
+            s.shutdown()
 
 
 if __name__ == "__main__":

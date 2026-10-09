@@ -115,10 +115,23 @@ export default defineConfig({
 									'<p class="cx-protocolo-rodape">Emitido em duas vias de igual teor: uma para a gestão e uma para o responsável técnico.</p>';
 								conteudo.appendChild(protocolo);
 							}
+							// Só na geração do PDF (?pdf): cada link interno ganha "(p. XXX)"; tools/gerar_pdf.py troca XXX pelo número da página
+							if (location.search.includes('pdf')) {
+								const cod = (k) => { let h = 0; for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 456976; return String.fromCharCode(65 + h % 26, 65 + Math.floor(h / 26) % 26, 65 + Math.floor(h / 676) % 26, 65 + Math.floor(h / 17576) % 26); };
+								document.querySelectorAll('.sl-markdown-content a[href]').forEach((a) => {
+									const h = a.getAttribute('href');
+									if (!h.startsWith('/') || h.startsWith('//') || a.nextElementSibling?.classList.contains('cx-ref')) return;
+									const chave = h.split('#')[0].split('?')[0].split('/').filter(Boolean).join('/');
+									const s = document.createElement('span');
+									s.className = 'cx-ref';
+									s.textContent = ' (p. ' + cod(chave) + ')';
+									a.after(s);
+								});
+							}
 							// Parágrafo que é só um rótulo em negrito (o CSS não distingue "só o negrito" de "negrito + texto")
 							document.querySelectorAll('.sl-markdown-content p').forEach((p) => {
 								const forte = p.querySelector(':scope > strong');
-								p.classList.toggle('cx-rotulo', !!forte && p.textContent.trim() === forte.textContent.trim());
+								p.classList.toggle('cx-so-negrito', !!forte && p.textContent.trim() === forte.textContent.trim());
 							});
 							// Card com pouco texto (ex.: só um nome ou cargo) fica com o corpo
 							// centralizado, em vez de justificado com poucas palavras esparramadas.
