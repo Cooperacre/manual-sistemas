@@ -9,6 +9,7 @@ a fonte única: mudança no padrão é feita aqui, sobe a versão no cabeçalho 
 | `GOVERNANCA.md` | `GOVERNANCA.md` (versionado) | Copiado inteiro, sem editar no projeto. |
 | `CHANGELOG.md` | `CHANGELOG.md` | Só quando o projeto ainda não tem; depois é mantido no projeto. |
 | `rodape-readme.md` | fim do `README.md` | Igual em todos os projetos. |
+| `gitignore-base` | fim do `.gitignore` | Bloco acrescentado ao que o projeto já ignora. |
 
 No `CLAUDE.md` de cada projeto, logo abaixo do título, entra a linha que faz o
 Claude Code carregar as regras comuns:

@@ -1,0 +1,12 @@
+
+# Padrão Cooperacre (modelos/gitignore-base): configuração local e segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+credenciais*.json
+*service-account*.json
+CLAUDE.local.md
