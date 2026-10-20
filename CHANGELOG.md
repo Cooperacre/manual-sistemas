@@ -11,3 +11,4 @@ O número atual vive em `package.json` (`version`, hoje 0.1.0).
 
 ### Alterado
 - Padrão Cooperacre v1.1 (`modelos/GOVERNANCA.md` e página Mudanças e versionamento): seção `### Implantação` no changelog quando publicar não basta (o que fazer e como desfazer); versão `0.x` até a entrada oficial em produção, que é a `1.0.0`; cada sistema documenta onde testa sem expor nem alterar dado real; como ler o resultado do `gitleaks dir`.
+- `CLAUDE.md` (guia de manutenção para quem desenvolve e para a IA) passa a ser versionado; notas só da máquina local ficam em `CLAUDE.local.md`, fora do git.
