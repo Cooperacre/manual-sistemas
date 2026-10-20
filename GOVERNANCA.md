@@ -1,6 +1,6 @@
 # Governança
 
-> **Padrão Cooperacre v1.0 (2026-10-20).** Cópia do modelo mantido em
+> **Padrão Cooperacre v1.1 (2026-10-20).** Cópia do modelo mantido em
 > `Cooperacre/manual-sistemas`, pasta `modelos/`. Não editar aqui: mudança no
 > padrão é feita no modelo e copiada para todos os projetos. O que é
 > específico deste sistema (como publicar, onde ficam as credenciais, o banco)
@@ -14,6 +14,10 @@ Valem para quem desenvolve e para assistentes de IA.
 
 - A alteração é feita e testada na cópia de trabalho (a máquina de quem
   desenvolve), nunca direto no ambiente em uso.
+- Cada sistema diz no `CLAUDE.md` (ou no `README.md`) onde as mudanças são
+  testadas: num banco de teste próprio ou, quando só existe o de produção,
+  como testar sem expor nem alterar dado real (registros fictícios
+  identificáveis, apagados ao fim do teste).
 - Antes de enviar para a branch principal, o responsável técnico confere o
   que mudou. O plano gratuito do GitHub não protege a branch de repositório
   privado: essa proteção vale como regra de trabalho.
@@ -38,6 +42,14 @@ Valem para quem desenvolve e para assistentes de IA.
   usa, depois o detalhe técnico, se precisar. Projeto com vários módulos:
   cada item diz o módulo.
 - O que ainda não foi publicado fica em `## [Não lançado]`.
+- Quando publicar a versão exige mais do que publicar o código (migração de
+  banco, variável de ambiente nova, outro sistema a atualizar, ação manual,
+  dado alterado sem volta), a versão ganha a seção `### Implantação`: o que
+  fazer para implantar e como desfazer. Fora desses casos, a seção não
+  aparece; desfazer é voltar o código e publicar de novo.
+- Enquanto o sistema não entra oficialmente em produção (usuários reais no
+  dia a dia e testes de aceite encerrados), a versão fica em `0.x`. A entrada
+  oficial em produção é a `1.0.0`.
 
 ## Credenciais e dados
 
@@ -48,7 +60,9 @@ Valem para quem desenvolve e para assistentes de IA.
   banco.
 - Antes de enviar ao repositório, roda-se a verificação de segredos
   (`gitleaks git` e `gitleaks dir`). Se algo sensível já tiver entrado, o
-  histórico é refeito antes da publicação e a credencial é trocada.
+  histórico é refeito antes da publicação e a credencial é trocada. O
+  `gitleaks dir` lê também arquivos fora do git: acusar o `.env` local é
+  esperado. Pede ação o achado no `gitleaks git` ou em arquivo versionado.
 - Dados reais (clientes, valores, nomes de colegas) não vão para exemplos,
   testes versionados, documentação nem prints. Usam-se dados fictícios.
 
