@@ -35,7 +35,7 @@ Quem conhece bem o processo pode construir descrevendo o que quer e deixando a I
 
 ## Orientação por sistema
 
-Cada sistema pode ter um arquivo de orientação para assistentes de IA (`CLAUDE.md`) com as regras do projeto: por exemplo, não alterar a versão em uso diretamente, não publicar automaticamente, não apagar dados sem análise e não colocar credenciais no código.
+Cada sistema pode ter um arquivo de orientação para assistentes de IA (`CLAUDE.md`) com as regras do projeto: por exemplo, não alterar a versão em uso diretamente, não publicar automaticamente, não apagar dados sem análise e não colocar credenciais no código. Esse arquivo fica no repositório e é enxuto; o que vale só para a máquina de quem desenvolve, ou é sensível, vai num arquivo local (`CLAUDE.local.md`) que não entra no repositório.
 
 :::note[Importante]
 Esse arquivo **orienta**, mas não protege sozinho. A proteção real vem de permissões de acesso, cópias de segurança, revisão e separação de ambientes.

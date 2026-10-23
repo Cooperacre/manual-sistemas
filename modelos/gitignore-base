@@ -10,3 +10,4 @@
 credenciais*.json
 *service-account*.json
 CLAUDE.local.md
+local/

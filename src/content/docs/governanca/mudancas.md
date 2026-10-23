@@ -23,6 +23,17 @@ Toda mudança em um sistema segue o mesmo caminho curto. Para a cooperativa, iss
 - **A implantação fica escrita quando não é só publicar.** Se a nova versão exige migrar o banco, configurar algo novo, atualizar outro sistema ou fazer uma ação manual, o histórico de mudanças daquela versão diz o que fazer e como desfazer.
 - **Mudança feita com IA segue o mesmo caminho.** Veja [Desenvolvimento com IA](/governanca/desenvolvimento-com-ia/).
 
+## Organização do código
+
+Todo sistema é organizado do mesmo jeito, para que quem chegar depois encontre as coisas no lugar sem precisar perguntar:
+
+- **Raiz limpa.** Na pasta principal ficam só os arquivos padrão (apresentação, histórico de mudanças, orientação para a IA, governança) e o que a ferramenta exige ali. O resto fica em pastas.
+- **Pastas gerais em inglês, regra de negócio em português.** Pastas comuns a qualquer sistema seguem o nome usual do mercado (`docs/`, `tests/`, `scripts/`); o que é do negócio da cooperativa fica em português (`lote.js`, `comissao/`).
+- **Testes em pasta própria.** Testes e dados fictícios ficam em `tests/`; dados reais usados só para conferência ficam numa pasta local, fora do repositório.
+- **Planejamento tem prazo.** O documento de planejamento serve enquanto o sistema é construído. Na entrega, o que continua valendo vira documentação, e o documento sai, ficando no histórico.
+
+Sistemas já em uso não mudam de pasta só para seguir essa regra: ela vale para sistemas novos e para reorganizações planejadas, porque renomear pode quebrar endereços e publicações.
+
 ## Números de versão
 
 Cada versão recebe um número no formato `MAJOR.MINOR.PATCH` (por exemplo, `1.2.0`):

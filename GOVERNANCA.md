@@ -1,6 +1,6 @@
 # Governança
 
-> **Padrão Cooperacre v1.1 (2026-10-20).** Cópia do modelo mantido em
+> **Padrão Cooperacre v1.2 (2026-10-23).** Cópia do modelo mantido em
 > `Cooperacre/manual-sistemas`, pasta `modelos/`. Não editar aqui: mudança no
 > padrão é feita no modelo e copiada para todos os projetos. O que é
 > específico deste sistema (como publicar, onde ficam as credenciais, o banco)
@@ -50,6 +50,27 @@ Valem para quem desenvolve e para assistentes de IA.
 - Enquanto o sistema não entra oficialmente em produção (usuários reais no
   dia a dia e testes de aceite encerrados), a versão fica em `0.x`. A entrada
   oficial em produção é a `1.0.0`.
+
+## Organização do repositório
+
+- Raiz limpa: só `README.md`, `CHANGELOG.md`, `CLAUDE.md`, `GOVERNANCA.md`,
+  `.gitignore` e o que a ferramenta exige ali (`package.json`, `index.php`,
+  arquivo de configuração do framework). O resto fica em pasta.
+- Pastas gerais em inglês (`src/`, `docs/`, `tests/`, `scripts/`,
+  `assets/`); nomes de regra de negócio em português (`lote.js`,
+  `comissao/`).
+- Testes, simuladores e dados fictícios ficam em `tests/`. Dados reais usados
+  só para conferência local ficam em `local/`, fora do git.
+- `CLAUDE.md` versionado e enxuto: contexto, onde testar e regras do projeto.
+  O que é só da máquina ou sensível (caminhos locais, quem usa, dados de
+  acesso que não são segredo) vai para `CLAUDE.local.md`, fora do git.
+- Documento de planejamento (PRD) vive enquanto o sistema é construído. Na
+  entrega sem pendências, é apagado; o que continua valendo (decisões,
+  funcionamento de integrações, próximos passos) passa para `docs/`, e a
+  versão completa fica no histórico do git.
+- Vale para projeto novo e para reorganização planejada. Projeto em uso não
+  muda de pasta só para seguir a regra: renomear pode quebrar endereço,
+  publicação e integrações.
 
 ## Credenciais e dados
 
